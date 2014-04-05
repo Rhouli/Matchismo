@@ -126,17 +126,9 @@
 			children = (
 				94CD9CEA18EEA8E100714E55 /* CardGameAppDelegate.h */,
 				94CD9CEB18EEA8E100714E55 /* CardGameAppDelegate.m */,
-				94CD9CED18EEA8E100714E55 /* Main.storyboard */,
-				94CD9D1018EEA9BA00714E55 /* Card.h */,
-				94CD9D1118EEA9BA00714E55 /* Card.m */,
-				94CD9D1318EEAAD800714E55 /* Deck.h */,
-				94CD9D1418EEAAD900714E55 /* Deck.m */,
-				94A857DA18EF74D200C0E175 /* PlayingCard.h */,
-				94A857DB18EF74D200C0E175 /* PlayingCard.m */,
-				94A857DD18EF778D00C0E175 /* PlayingCardDeck.h */,
-				94A857DE18EF778D00C0E175 /* PlayingCardDeck.m */,
-				94CD9CF018EEA8E100714E55 /* CardGameViewController.h */,
-				94CD9CF118EEA8E100714E55 /* CardGameViewController.m */,
+				94CD9D1718EF9AF200714E55 /* Viewer */,
+				94CD9D1618EF9A9500714E55 /* Model */,
+				94CD9D1818EF9AFB00714E55 /* Controller */,
 				94CD9CF318EEA8E100714E55 /* Images.xcassets */,
 				94CD9CE218EEA8E100714E55 /* Supporting Files */,
 			);
@@ -170,6 +162,38 @@
 				94CD9D0318EEA8E100714E55 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		94CD9D1618EF9A9500714E55 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				94CD9D1018EEA9BA00714E55 /* Card.h */,
+				94CD9D1118EEA9BA00714E55 /* Card.m */,
+				94CD9D1318EEAAD800714E55 /* Deck.h */,
+				94CD9D1418EEAAD900714E55 /* Deck.m */,
+				94A857DA18EF74D200C0E175 /* PlayingCard.h */,
+				94A857DB18EF74D200C0E175 /* PlayingCard.m */,
+				94A857DD18EF778D00C0E175 /* PlayingCardDeck.h */,
+				94A857DE18EF778D00C0E175 /* PlayingCardDeck.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		94CD9D1718EF9AF200714E55 /* Viewer */ = {
+			isa = PBXGroup;
+			children = (
+				94CD9CED18EEA8E100714E55 /* Main.storyboard */,
+			);
+			name = Viewer;
+			sourceTree = "<group>";
+		};
+		94CD9D1818EF9AFB00714E55 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				94CD9CF018EEA8E100714E55 /* CardGameViewController.h */,
+				94CD9CF118EEA8E100714E55 /* CardGameViewController.m */,
+			);
+			name = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
