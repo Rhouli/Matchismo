@@ -124,8 +124,6 @@
 		94CD9CE118EEA8E100714E55 /* Matchismo */ = {
 			isa = PBXGroup;
 			children = (
-				94CD9CEA18EEA8E100714E55 /* CardGameAppDelegate.h */,
-				94CD9CEB18EEA8E100714E55 /* CardGameAppDelegate.m */,
 				94CD9D1718EF9AF200714E55 /* Viewer */,
 				94CD9D1618EF9A9500714E55 /* Model */,
 				94CD9D1818EF9AFB00714E55 /* Controller */,
@@ -138,6 +136,8 @@
 		94CD9CE218EEA8E100714E55 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				94CD9CEA18EEA8E100714E55 /* CardGameAppDelegate.h */,
+				94CD9CEB18EEA8E100714E55 /* CardGameAppDelegate.m */,
 				94CD9CE318EEA8E100714E55 /* Matchismo-Info.plist */,
 				94CD9CE418EEA8E100714E55 /* InfoPlist.strings */,
 				94CD9CE718EEA8E100714E55 /* main.m */,
@@ -428,7 +428,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Matchismo/Matchismo-Prefix.pch";
 				INFOPLIST_FILE = "Matchismo/Matchismo-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -441,7 +443,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Matchismo/Matchismo-Prefix.pch";
 				INFOPLIST_FILE = "Matchismo/Matchismo-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
