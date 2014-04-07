@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *flipsLabel;
 @property (nonatomic) int flipCount;
 @property (strong, nonatomic) Deck *deck;
+@property (weak, nonatomic) IBOutlet UILabel *matchLabel;
 
 @end
 
@@ -37,6 +38,21 @@
     }
 }
 
+/*- (void)setMatchLabel:(int)flipCount {
+    NSMutableArray *cardTitles = [[NSMutableArray alloc] initWithCapacity:[cardButtons count]];
+    for(UIButton *button in self.cardButtons){
+        [cardTitles addObject:button.currentTitle];
+    }
+    for (int i = 0; i < [cardTitles count]-1; i++){
+        for(int j = i; j < [cardTitles count]; j++){
+            if (cardTitles[i][0] == cardTitles[j][0]){
+                self.matchLabel.text = [NSString stringWithFormat:@"Ranks Match"];
+            } else if (cardTitles[i][1] == cardTitles[j][1]){
+                self.matchLabel.text = [NSString stringWithFormat:@"Suits Match"];
+            }
+        }
+    }
+}*/
 
 - (void)setFlipCount:(int)flipCount {
     _flipCount = flipCount;

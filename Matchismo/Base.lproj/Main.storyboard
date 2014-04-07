@@ -61,7 +61,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sjp-Zp-Dh9">
-                                <rect key="frame" x="106" y="315" width="108" height="32"/>
+                                <rect key="frame" x="106" y="310" width="108" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -72,6 +72,7 @@
                     </view>
                     <connections>
                         <outlet property="flipsLabel" destination="LoA-vm-r4f" id="077-vj-oUr"/>
+                        <outlet property="matchLabel" destination="Sjp-Zp-Dh9" id="R8v-Ac-Nna"/>
                         <outletCollection property="cardButtons" destination="ODz-qE-GmA" id="EIr-8j-4sM"/>
                         <outletCollection property="cardButtons" destination="NLl-Zb-c6X" id="ql0-fr-4x9"/>
                     </connections>
