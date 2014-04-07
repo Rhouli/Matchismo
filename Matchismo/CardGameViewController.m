@@ -33,9 +33,10 @@
     self.flipCount = 0;
     for(UIButton *button in self.cardButtons){
         [button setBackgroundImage:[UIImage imageNamed:@"cardback"] forState:UIControlStateNormal];
-        [button setBackgroundImage:[UIImage imageNamed:@"cardback"] forState:UIControlStateNormal];
+        [button setTitle:@"" forState:UIControlStateNormal];
     }
 }
+
 
 - (void)setFlipCount:(int)flipCount {
     _flipCount = flipCount;

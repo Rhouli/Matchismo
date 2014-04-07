@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NLl-Zb-c6X">
-                                <rect key="frame" x="75" y="192" width="64" height="96"/>
+                                <rect key="frame" x="73" y="192" width="64" height="96"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" backgroundImage="cardback">
@@ -60,14 +60,20 @@
                                     <action selector="dealButton:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="s7V-lZ-rPv"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sjp-Zp-Dh9">
+                                <rect key="frame" x="106" y="315" width="108" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.50196081399917603" blue="0.25098040699958801" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <connections>
                         <outlet property="flipsLabel" destination="LoA-vm-r4f" id="077-vj-oUr"/>
-                        <outletCollection property="buttons" destination="ODz-qE-GmA" id="lrk-we-nEA"/>
-                        <outletCollection property="buttons" destination="NLl-Zb-c6X" id="unt-bA-FfP"/>
-                        <outletCollection property="buttons" destination="rTt-Tr-co3" id="aI4-eP-Sen"/>
+                        <outletCollection property="cardButtons" destination="ODz-qE-GmA" id="EIr-8j-4sM"/>
+                        <outletCollection property="cardButtons" destination="NLl-Zb-c6X" id="ql0-fr-4x9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
