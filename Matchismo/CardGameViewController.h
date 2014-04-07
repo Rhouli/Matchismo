@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface CardGameViewController : UIViewController
-
+@property (nonatomic, retain) IBOutletCollection(UIButton) NSArray *cardButtons;
 @end

@@ -13,9 +13,12 @@
 @property (weak, nonatomic) IBOutlet UILabel *flipsLabel;
 @property (nonatomic) int flipCount;
 @property (strong, nonatomic) Deck *deck;
+
 @end
 
 @implementation CardGameViewController
+
+@synthesize cardButtons;
 
 - (Deck *)deck {
     if(!_deck) _deck = [self createDeck];
@@ -25,14 +28,21 @@
 - (Deck *)createDeck {
     return [[PlayingCardDeck alloc] init];
 }
+- (IBAction)dealButton:(id)sender {
+    _deck = [self createDeck];
+    self.flipCount = 0;
+    for(UIButton *button in self.cardButtons){
+        [button setBackgroundImage:[UIImage imageNamed:@"cardback"] forState:UIControlStateNormal];
+        [button setBackgroundImage:[UIImage imageNamed:@"cardback"] forState:UIControlStateNormal];
+    }
+}
 
 - (void)setFlipCount:(int)flipCount {
     _flipCount = flipCount;
     self.flipsLabel.text = [NSString stringWithFormat:@"Flips: %d", self.flipCount];
     if (self.flipCount == 52){
-        self.flipsLabel.text = [NSString stringWithFormat:@"A new deck has been delt."];
-        _flipCount = 0;
-        _deck = [self createDeck];
+        self.flipsLabel.text = [NSString stringWithFormat:@"Deck is empty. Please re-deal."];
+
     }
     NSLog(@"flipCount changed to %d", self.flipCount);
 }
