@@ -35,6 +35,10 @@
     [self.game chooseCardAtIndex:chosenButtonIndex];
     [self updateUI];
 }
+- (IBAction)ResetGame:(UIButton *)sender {
+    [self.game newGame:[self createDeck]];
+    [self updateUI];
+}
 
 - (void)updateUI {
     for (UIButton *cardButton in self.cardButtons) {

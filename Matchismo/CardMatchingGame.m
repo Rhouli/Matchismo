@@ -36,6 +36,26 @@
     return self;
 }
 
+-(void)newGame:(Deck *)deck {
+    int count = [self.cards count];
+    NSMutableArray *discardItems = [NSMutableArray array];
+    // remove cards in cards array
+    for (Card *card in self.cards)
+        [discardItems addObject:card];
+    [self.cards removeObjectsInArray:discardItems];
+    
+    // add new cards to the cards array
+    for (int i = 0; i < count; i++) {
+        Card *card = [deck drawRandomCard];
+        if (card) {
+            [self.cards addObject:card];
+        } else {
+            break;
+        }
+    }
+    self.score = 0;
+}
+
 - (Card *)cardAtIndex:(NSUInteger)index {
     return (index<[self.cards count]) ? self.cards[index] : nil;
 }
