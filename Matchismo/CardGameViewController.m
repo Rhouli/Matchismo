@@ -7,7 +7,6 @@
 //
 
 #import "CardGameViewController.h"
-#import "PlayingCardDeck.h"
 #import "CardMatchingGame.h"
 
 @interface CardGameViewController ()
@@ -15,6 +14,7 @@
 @property (strong, nonatomic) CardMatchingGame *game;
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *changeMatchNumberButton;
 @end
 
 @implementation CardGameViewController
@@ -27,17 +27,37 @@
 }
 
 - (Deck *)createDeck {
-    return [[PlayingCardDeck alloc] init];
+    return nil;
 }
 
 - (IBAction)touchCardButton:(UIButton *)sender {
+    // enable match selector
+    _changeMatchNumberButton.userInteractionEnabled = NO;
     int chosenButtonIndex = [self.cardButtons indexOfObject:sender];
     [self.game chooseCardAtIndex:chosenButtonIndex];
     [self updateUI];
 }
+
+// restart the game and update the UI
 - (IBAction)ResetGame:(UIButton *)sender {
+    // Create a new game
     [self.game newGame:[self createDeck]];
     [self updateUI];
+    
+    // enable match selector
+    _changeMatchNumberButton.userInteractionEnabled = YES;
+}
+
+// change the match number to form 2->3 or 3->2 and then restart the game
+// and update the UI
+- (IBAction)changeMatchNumber:(id)sender {
+    // Figure out which button is selected
+    UISegmentedControl *segmentedControl = (UISegmentedControl*) sender;
+    NSString *text = [segmentedControl titleForSegmentAtIndex: [segmentedControl selectedSegmentIndex]];
+    
+    // Match the selected button to its corresponding matchNumber
+    int matchNumber = [text integerValue];
+    [self.game setMatchNum:matchNumber];
 }
 
 - (void)updateUI {

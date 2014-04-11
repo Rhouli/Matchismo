@@ -15,8 +15,10 @@
 // designated initializer
 - (instancetype)initWithCardCount:(NSUInteger)count usingDeck:(Deck *)deck;
 - (void)newGame:(Deck *)deck;
+- (void)newGame:(Deck *)deck usingMatchNum:(NSInteger)matchNum;
 - (void)chooseCardAtIndex:(NSUInteger)index;
 - (Card *)cardAtIndex:(NSUInteger)index;
+- (void)setMatchNum:(NSInteger)matchNum;
 
 @property (nonatomic, readonly) NSInteger score;
 
