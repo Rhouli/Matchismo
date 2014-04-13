@@ -17,6 +17,8 @@
 @property (weak, nonatomic) IBOutlet UISegmentedControl *changeMatchNumberButton;
 @property (weak, nonatomic) IBOutlet UILabel *displayGameInfo;
 @property (strong, nonatomic) NSMutableArray *cardIgnore;
+@property (strong, nonatomic) NSMutableArray *gameHistory;
+@property (weak, nonatomic) IBOutlet UISlider *slider;
 @property NSInteger previousScore;
 @end
 
@@ -38,6 +40,11 @@
     return _cardIgnore;
 }
 
+- (NSMutableArray *)gameHistory {
+    if(!_gameHistory) _gameHistory = [[NSMutableArray alloc] init];
+    return _gameHistory;
+}
+
 - (IBAction)touchCardButton:(UIButton *)sender {
     // enable match selector
     _changeMatchNumberButton.userInteractionEnabled = NO;
@@ -52,6 +59,7 @@
     [self.game newGame:[self createDeck]];
     [self updateUI];
     self.displayGameInfo.text = @"";
+    self.gameHistory = nil;
     // enable match selector
     _changeMatchNumberButton.userInteractionEnabled = YES;
 }
@@ -68,11 +76,12 @@
 }
 
 - (void)updateUI {
-    // update buttons
     self.displayGameInfo.textAlignment = NSTextAlignmentCenter;
     self.displayGameInfo.text = [self titleForGameInfo:self.game.score];
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
     int firstRound = 0;
+
+    // update buttons
     for (UIButton *cardButton in self.cardButtons) {
         if(cardButton.titleLabel.text == nil)
             firstRound++;
@@ -84,6 +93,11 @@
         NSLog(@"%@", [self titleForCard:card]);
         [cardButton setBackgroundImage:[self backgroundImageForCard:card] forState:UIControlStateNormal];
         cardButton.enabled = !card.isMatched;
+    }
+    // add display to history
+    if (![self.displayGameInfo.text isEqualToString:@""]){
+        [self.gameHistory addObject:self.displayGameInfo.text];
+        [self changeSliderRange];
     }
     if (firstRound == [self.cardButtons count])
         self.displayGameInfo.text = [self titleForGameInfo:self.game.score];
@@ -144,6 +158,24 @@
     }
     return outputString;
 }
+
+- (void)viewHistory:(id)sender {
+    int sliderVal = lroundf([self.slider value]);
+    if([self.gameHistory count]){
+        if(sliderVal+1 < [self.gameHistory count]){
+            [self.displayGameInfo setText:[self.gameHistory objectAtIndex:sliderVal]];
+            [self.displayGameInfo setBackgroundColor:[UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:0.3]];
+        } else
+            [self.displayGameInfo setBackgroundColor:(UIColor.clearColor)];
+    }
+}
+
+- (void)changeSliderRange {
+    int maxVal = [self.gameHistory count] -1;
+    [self.slider setMaximumValue:maxVal] ;
+    [self.slider setValue:maxVal animated:YES];
+}
+
 
 - (NSString *)titleForCard:(Card *)card {
     return card.isChosen ? card.contents: @" ";

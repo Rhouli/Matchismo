@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		94A28A5618FA3A2A00647C56 /* stanford-cardinal-profile.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 94A28A5518FA3A2A00647C56 /* stanford-cardinal-profile.jpg */; };
 		94A857DC18EF74D200C0E175 /* PlayingCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 94A857DB18EF74D200C0E175 /* PlayingCard.m */; };
 		94A857DF18EF778D00C0E175 /* PlayingCardDeck.m in Sources */ = {isa = PBXBuildFile; fileRef = 94A857DE18EF778D00C0E175 /* PlayingCardDeck.m */; };
 		94CD9CDC18EEA8E100714E55 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94CD9CDB18EEA8E100714E55 /* Foundation.framework */; };
@@ -40,6 +41,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		94A28A5518FA3A2A00647C56 /* stanford-cardinal-profile.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "stanford-cardinal-profile.jpg"; path = "../../../Desktop/stanford-cardinal-profile.jpg"; sourceTree = "<group>"; };
 		94A857DA18EF74D200C0E175 /* PlayingCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayingCard.h; sourceTree = "<group>"; };
 		94A857DB18EF74D200C0E175 /* PlayingCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayingCard.m; sourceTree = "<group>"; };
 		94A857DD18EF778D00C0E175 /* PlayingCardDeck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayingCardDeck.h; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 				94CD9CE418EEA8E100714E55 /* InfoPlist.strings */,
 				94CD9CE718EEA8E100714E55 /* main.m */,
 				94CD9CE918EEA8E100714E55 /* Matchismo-Prefix.pch */,
+				94A28A5518FA3A2A00647C56 /* stanford-cardinal-profile.jpg */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -285,6 +288,7 @@
 			files = (
 				94CD9CF418EEA8E100714E55 /* Images.xcassets in Resources */,
 				94CD9CE618EEA8E100714E55 /* InfoPlist.strings in Resources */,
+				94A28A5618FA3A2A00647C56 /* stanford-cardinal-profile.jpg in Resources */,
 				94CD9CEF18EEA8E100714E55 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
