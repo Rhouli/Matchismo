@@ -104,7 +104,7 @@
     self.previousScore = self.game.score;
 }
 
-// find output of the last move. Prints out nothing if we
+// find output of the last move. Prints out nothing if we have no selection
 - (NSString *)titleForGameInfo:(NSInteger) score {
     NSMutableOrderedSet *cards = [NSMutableOrderedSet orderedSet];
     int matchNumber = [[(UISegmentedControl*)self.changeMatchNumberButton titleForSegmentAtIndex: [self.changeMatchNumberButton selectedSegmentIndex]] integerValue];
