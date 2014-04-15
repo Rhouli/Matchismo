@@ -476,7 +476,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="cardback" width="300" height="450"/>
+        <image name="cardback" width="183" height="275"/>
         <image name="cardfront" width="64" height="96"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
