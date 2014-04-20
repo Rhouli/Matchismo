@@ -29,6 +29,7 @@ static const int DEFAULT_MATCH_NUM = 2;
 - (void)setMatchNum:(NSInteger)matchNum{
     _matchNum = matchNum;
 }
+
 -(instancetype)initWithCardCount:(NSUInteger)count usingDeck:(Deck *)deck {
     self = [super init]; // super's designated initializer
     if (self) {

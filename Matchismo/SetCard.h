@@ -10,8 +10,13 @@
 
 @interface SetCard : Card
 
-@property (strong, nonatomic) NSAttributedString *symbol;
+@property (strong, nonatomic) NSString *symbol;
+@property (strong, nonatomic) NSString *color;
+@property (strong, nonatomic) NSString *shade;
 
 + (NSArray *)validSymbols;
++ (NSArray *)validColors;
++ (NSArray *)validShades;
++ (int)maxNumber;
 
 @end

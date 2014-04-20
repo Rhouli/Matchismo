@@ -10,7 +10,6 @@
 #import "CardMatchingGame.h"
 
 @interface CardGameViewController ()
-@property (weak, nonatomic) IBOutlet UILabel *matchLabel;
 @property (strong, nonatomic) CardMatchingGame *game;
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
@@ -79,29 +78,30 @@
     self.displayGameInfo.textAlignment = NSTextAlignmentCenter;
     self.displayGameInfo.text = [self titleForGameInfo:self.game.score];
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
-    int firstRound = 0;
+//    int firstRound = 0;
 
     // update buttons
     for (UIButton *cardButton in self.cardButtons) {
-        if(cardButton.titleLabel.text == nil)
-            firstRound++;
+//        if(cardButton.titleLabel.text == nil)
+//            firstRound++;
         int cardButtonIndex = [self.cardButtons
                                indexOfObject:cardButton];
         Card *card = [self.game cardAtIndex:cardButtonIndex];
-
-        [cardButton setTitle:[self titleForCard:card] forState:UIControlStateNormal];
-        NSLog(@"%@", [self titleForCard:card]);
         [cardButton setBackgroundImage:[self backgroundImageForCard:card] forState:UIControlStateNormal];
+        [cardButton setAttributedTitle:[self titleForCard:card] forState:UIControlStateNormal];
+        [cardButton setTitle:@"meoo" forState:UIControlStateNormal];
+        NSLog(@"%@", [self titleForCard:card]);
+        
         cardButton.enabled = !card.isMatched;
     }
     // add display to history
-    if (![self.displayGameInfo.text isEqualToString:@""]){
-        [self.gameHistory addObject:self.displayGameInfo.text];
-        [self changeSliderRange];
-    }
-    if (firstRound == [self.cardButtons count])
-        self.displayGameInfo.text = [self titleForGameInfo:self.game.score];
-    self.previousScore = self.game.score;
+//    if (![self.displayGameInfo.text isEqualToString:@""]){
+//        [self.gameHistory addObject:self.displayGameInfo.text];
+//        [self changeSliderRange];
+//    }
+//    if (firstRound == [self.cardButtons count])
+//        self.displayGameInfo.text = [self titleForGameInfo:self.game.score];
+//    self.previousScore = self.game.score;
 }
 
 // find output of the last move. Prints out nothing if we
@@ -170,17 +170,17 @@
     }
 }
 
+- (NSAttributedString *)titleForCard:(Card *)card {
+    return nil;
+}
+
 - (void)changeSliderRange {
     int maxVal = [self.gameHistory count] -1;
     [self.slider setMaximumValue:maxVal] ;
     [self.slider setValue:maxVal animated:YES];
 }
 
-
-- (NSString *)titleForCard:(Card *)card {
-    return card.isChosen ? card.contents: @" ";
-}
 - (UIImage *)backgroundImageForCard:(Card *)card {
-    return [UIImage imageNamed:card.isChosen ? @"cardfront" : @"cardback"];
+    return nil;
 }
 @end

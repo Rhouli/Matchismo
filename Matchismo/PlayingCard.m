@@ -23,7 +23,7 @@
     return score;
 }
 
-- (NSString *)contents
+- (NSString*)contents
 {
     NSArray *rankStrings = [PlayingCard rankStrings];
     return [rankStrings[self.rank] stringByAppendingString:self.suit];

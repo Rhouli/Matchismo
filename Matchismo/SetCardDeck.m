@@ -11,18 +11,22 @@
 
 @implementation SetCardDeck
 
-static const int DECKSIZE = 81;
-
 - (instancetype)init
 {
     self = [super init];
     
     if(self){
-        for (NSAttributedString *symbol in [SetCard validSymbols]) {
-            for (NSUInteger rank = 1; rank <= DECKSIZE/[[SetCard validSymbols] count]; rank++){
-                SetCard *card = [[SetCard alloc] init];
-                card.symbol = symbol;
-                [self addCard:card];
+        for (NSString *symbol in [SetCard validSymbols]) {
+            for (NSString *color in [SetCard validColors]){
+                for (NSString *shade in [SetCard validShades]){
+                    for (int i = 0; i < [SetCard maxNumber]; i++){
+                        SetCard *card = [[SetCard alloc] init];
+                        card.symbol = symbol;
+                        card.color = color;
+                        card.shade = shade;
+                        [self addCard:card];
+                    }
+                }
             }
         }
     }

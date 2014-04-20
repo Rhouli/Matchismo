@@ -13,5 +13,8 @@
 
 // abstract
 - (Deck *)createDeck;
+- (NSAttributedString *)titleForCard:(Card *)card;
+- (void)updateUI;
+- (UIImage *)backgroundImageForCard:(Card *)card;
 
 @end
