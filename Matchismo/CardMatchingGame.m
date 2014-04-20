@@ -116,6 +116,7 @@ static const int DEFAULT_MATCH_NUM = 2;
                 }
             }
             card.chosen = YES;
+            card.selected = YES;
             self.score -= COST_TO_CHOOSE;
         }
     }

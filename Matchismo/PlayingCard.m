@@ -19,6 +19,7 @@
         } else if ([otherCard.suit isEqualToString:self.suit]) {
             score += 1;
         }
+        otherCard.selected = YES;
     }
     return score;
 }
@@ -28,6 +29,7 @@
     NSArray *rankStrings = [PlayingCard rankStrings];
     return [rankStrings[self.rank] stringByAppendingString:self.suit];
 }
+
 @synthesize suit = _suit;
 
 + (NSArray *)validSuits

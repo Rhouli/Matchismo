@@ -23,7 +23,7 @@
     return [[SetCardDeck alloc] init];
 }
 
-- (NSAttributedString *)titleForCard:(Card *)card {
+- (NSAttributedString *)titleForCard:(Card *)card showContents:(BOOL)optional{
     NSString *string = card.contents;
     
     NSArray *contents = [string componentsSeparatedByString:@", "];
@@ -65,4 +65,12 @@
     [self updateUI];
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue
+                 sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"History"]) {
+        if ([segue.destinationViewController isKindOfClass:[HistoryViewController class]]) {
+            [segue.destinationViewController setGameHistory:self.gameHistory];
+        }
+    }
+}
 @end

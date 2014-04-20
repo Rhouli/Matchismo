@@ -8,13 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "Deck.h"
+#import "HistoryViewController.h"
 
 @interface CardGameViewController : UIViewController
 
+@property (strong, nonatomic) NSMutableArray *gameHistory;
+
 // abstract
 - (Deck *)createDeck;
-- (NSAttributedString *)titleForCard:(Card *)card;
+- (NSAttributedString *)titleForCard:(Card *)card showContents:(BOOL)optional;
 - (void)updateUI;
 - (UIImage *)backgroundImageForCard:(Card *)card;
-
 @end

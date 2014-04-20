@@ -17,10 +17,9 @@
         if ([otherCard.symbol isEqual:self.symbol]) {
             score += 1;
         }
+        otherCard.selected = YES;
     }
-    if ( score == [otherCards count])
-        return score*4;
-    return 0;
+    return score*4;
 }
 
 - (NSString *)contents

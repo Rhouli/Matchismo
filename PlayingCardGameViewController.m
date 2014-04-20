@@ -24,9 +24,13 @@
     return [[PlayingCardDeck alloc] init];
 }
 
-- (NSAttributedString *)titleForCard:(Card *)card {
-    NSString* string = card.isChosen ? card.contents: @" ";
-    
+- (NSAttributedString *)titleForCard:(Card *)card showContents:(BOOL)optional{
+    NSString* string;
+    if (optional)
+        string = card.contents;
+    else
+        string = card.isChosen ? card.contents: @" ";
+
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     paragraphStyle.alignment = NSTextAlignmentCenter;
     UIFont * labelFont = [UIFont fontWithName:FONT_HELVETICA size:FONT_SIZE];

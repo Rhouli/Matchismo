@@ -5,7 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
-        <!--Playing Card Game View Controller - Playing Card Game-->
+        <!--Playing Card Game View Controller - Playing Card-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
                 <viewController id="vXZ-lx-hvc" customClass="PlayingCardGameViewController" sceneMemberID="viewController">
@@ -331,7 +331,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Zfc-6x-SnQ">
                                 <rect key="frame" x="18" y="74" width="40" height="60"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button" backgroundImage="PlayingCardBack">
+                                <state key="normal" backgroundImage="PlayingCardBack">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -342,7 +342,27 @@
                         <color key="backgroundColor" red="0.0" green="0.50196081399917603" blue="0.25098040699958801" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Playing Card Game" id="TaJ-eR-y3g"/>
-                    <navigationItem key="navigationItem" title="Playing Card Game" id="fO4-fl-6fg"/>
+                    <navigationItem key="navigationItem" title="Playing Card" id="fO4-fl-6fg">
+                        <barButtonItem key="rightBarButtonItem" id="Kye-BH-oTI">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="vTE-tx-Fh5">
+                                <rect key="frame" x="233" y="5" width="71" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="History">
+                                    <attributedString key="attributedTitle">
+                                        <fragment content="History">
+                                            <attributes>
+                                                <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <font key="NSFont" size="15" name="HelveticaNeue"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                </state>
+                                <connections>
+                                    <segue destination="Chj-ed-zsK" kind="push" identifier="History" id="Mv2-8Q-C4J"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="changeMatchNumberButton" destination="cXg-VC-eKI" id="IZN-x5-Csb"/>
                         <outlet property="displayGameInfo" destination="qoM-VG-y6t" id="rk2-lP-asq"/>
@@ -371,12 +391,40 @@
                         <outletCollection property="cardButtons" destination="5Sm-nv-4HF" id="xul-yC-asv"/>
                         <outletCollection property="cardButtons" destination="Pge-hT-K0o" id="086-oP-bPf"/>
                         <outletCollection property="cardButtons" destination="Zfc-6x-SnQ" id="gcV-YJ-ayf"/>
-                        <segue destination="bTS-o4-kKj" kind="push" identifier="History" id="7zX-oJ-Kjp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="844" y="-215"/>
+        </scene>
+        <!--History View Controller - Game History-->
+        <scene sceneID="k3A-5k-Q56">
+            <objects>
+                <viewController id="Chj-ed-zsK" customClass="HistoryViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="zme-eh-BTl">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="center" id="wQ2-8P-1Kv">
+                                <rect key="frame" x="0.0" y="-8" width="320" height="480"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Game History" id="PHh-q9-Icg">
+                        <barButtonItem key="backBarButtonItem" title="Game" id="ND9-SR-Gc0"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="gameHistoryTextField" destination="wQ2-8P-1Kv" id="muE-k5-Lej"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3Nl-sy-L4X" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1416" y="108"/>
         </scene>
         <!--Navigation Controller - Playing Card Game-->
         <scene sceneID="u0V-Ub-Rxa">
@@ -410,7 +458,7 @@
             </objects>
             <point key="canvasLocation" x="351" y="438"/>
         </scene>
-        <!--Set Card Game View Controller - Set Card Game-->
+        <!--Set Card Game View Controller - Set Card-->
         <scene sceneID="1xk-vN-NyA">
             <objects>
                 <viewController id="Add-eZ-Vmd" customClass="SetCardGameViewController" sceneMemberID="viewController">
@@ -584,7 +632,22 @@
                         <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="0.25098040700000002" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Set Card Game" id="jCp-fb-HyV"/>
-                    <navigationItem key="navigationItem" title="Set Card Game" id="Qa3-RN-eGL"/>
+                    <navigationItem key="navigationItem" title="Set Card" id="Qa3-RN-eGL">
+                        <barButtonItem key="rightBarButtonItem" id="oD1-DH-s9g">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="0MB-Nu-XSM">
+                                <rect key="frame" x="233" y="5" width="71" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <state key="normal" title="History">
+                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                            </button>
+                            <connections>
+                                <segue destination="Chj-ed-zsK" kind="push" identifier="History" id="7RY-wO-Jn2"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="changeMatchNumberButton" destination="zF5-GX-wJE" id="bzA-wZ-ilE"/>
                         <outlet property="displayGameInfo" destination="iJD-FP-y7A" id="C2B-Um-AfW"/>
@@ -601,41 +664,11 @@
                         <outletCollection property="cardButtons" destination="gwR-uP-far" id="gLO-fD-KTU"/>
                         <outletCollection property="cardButtons" destination="A2l-eD-O6Y" id="Z3L-Eg-Fie"/>
                         <outletCollection property="cardButtons" destination="1HB-KM-BMV" id="rMA-9V-hbP"/>
-                        <segue destination="bTS-o4-kKj" kind="push" identifier="History" id="5X5-4g-erD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LOr-pk-waT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="844" y="438"/>
-        </scene>
-        <!--Table View Controller - Game History-->
-        <scene sceneID="FH1-hq-3zT">
-            <objects>
-                <tableViewController id="bTS-o4-kKj" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="aZH-XD-ARy">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="Vvn-pv-p1k">
-                                <rect key="frame" x="0.0" y="86" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Vvn-pv-p1k" id="LSv-jW-Y26">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="bTS-o4-kKj" id="BgP-BW-be1"/>
-                            <outlet property="delegate" destination="bTS-o4-kKj" id="nhT-Bi-xrO"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Game History" id="NUb-wI-rGs"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Ike-57-t34" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1369" y="82"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="eba-la-YsX">
@@ -670,6 +703,6 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="5X5-4g-erD"/>
+        <segue reference="7RY-wO-Jn2"/>
     </inferredMetricsTieBreakers>
 </document>

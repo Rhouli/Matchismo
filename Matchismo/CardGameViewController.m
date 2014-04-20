@@ -15,9 +15,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *changeMatchNumberButton;
 @property (weak, nonatomic) IBOutlet UILabel *displayGameInfo;
-@property (strong, nonatomic) NSMutableArray *cardIgnore;
-@property (strong, nonatomic) NSMutableArray *gameHistory;
-@property (weak, nonatomic) IBOutlet UISlider *slider;
 @property NSInteger previousScore;
 @end
 
@@ -32,11 +29,6 @@
 
 - (Deck *)createDeck {
     return nil;
-}
-
-- (NSMutableArray *)cardIgnore {
-    if(!_cardIgnore) _cardIgnore = [[NSMutableArray alloc] init];
-    return _cardIgnore;
 }
 
 - (NSMutableArray *)gameHistory {
@@ -75,112 +67,99 @@
 }
 
 - (void)updateUI {
-    self.displayGameInfo.textAlignment = NSTextAlignmentCenter;
-    self.displayGameInfo.text = [self titleForGameInfo:self.game.score];
+    self.displayGameInfo.attributedText = [self titleForGameInfo:self.game.score];
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
-//    int firstRound = 0;
-
+    
     // update buttons
     for (UIButton *cardButton in self.cardButtons) {
-//        if(cardButton.titleLabel.text == nil)
-//            firstRound++;
         int cardButtonIndex = [self.cardButtons
                                indexOfObject:cardButton];
         Card *card = [self.game cardAtIndex:cardButtonIndex];
+        
         [cardButton setBackgroundImage:[self backgroundImageForCard:card] forState:UIControlStateNormal];
-        [cardButton setAttributedTitle:[self titleForCard:card] forState:UIControlStateNormal];
-        [cardButton setTitle:@"meoo" forState:UIControlStateNormal];
-        NSLog(@"%@", [self titleForCard:card]);
+        [cardButton setAttributedTitle:[self titleForCard:card showContents:NO] forState:UIControlStateNormal];
         
         cardButton.enabled = !card.isMatched;
     }
     // add display to history
-//    if (![self.displayGameInfo.text isEqualToString:@""]){
-//        [self.gameHistory addObject:self.displayGameInfo.text];
-//        [self changeSliderRange];
-//    }
-//    if (firstRound == [self.cardButtons count])
-//        self.displayGameInfo.text = [self titleForGameInfo:self.game.score];
-//    self.previousScore = self.game.score;
+    if (![self.displayGameInfo.text isEqualToString:@""])
+        [self.gameHistory addObject:self.displayGameInfo.attributedText];
+    self.previousScore = self.game.score;
 }
 
 // find output of the last move. Prints out nothing if we have no selection
-- (NSString *)titleForGameInfo:(NSInteger) score {
+- (NSAttributedString *)titleForGameInfo:(NSInteger) score {
     NSMutableOrderedSet *cards = [NSMutableOrderedSet orderedSet];
-    int matchNumber = [[(UISegmentedControl*)self.changeMatchNumberButton titleForSegmentAtIndex: [self.changeMatchNumberButton selectedSegmentIndex]] integerValue];
+    int matchNumber = [[(UISegmentedControl*)self.changeMatchNumberButton
+                        titleForSegmentAtIndex:[self.changeMatchNumberButton selectedSegmentIndex]] integerValue];
     
     // Check for active cards
     for (UIButton *cardButton in self.cardButtons) {
         int cardButtonIndex = [self.cardButtons
                                indexOfObject:cardButton];
         Card *card = [self.game cardAtIndex:cardButtonIndex];
-        // if card was recentley chosen and was not previously matched select it
-        if (card.chosen && ![self.cardIgnore containsObject:card] ){
+        // if card is selected add it. If it is not chosen unselect it
+        if (card.selected){
             [cards addObject:card];
-        // if there was a mismatch select the unselected cards that didnt match
-        } else if (!card.matched && ![cardButton.titleLabel.text isEqual:@" "]){
-            [cards addObject:card];
+            if (!card.chosen)
+                card.selected = NO;
         }
     }
-    
     // User has unselected a card so remove card from output
     if([cards count] < matchNumber){
         NSMutableArray *toBeRemoved = [NSMutableArray array];
         for (Card* card in cards){
-            if(!card.chosen)
+            if(!card.chosen){
                 [toBeRemoved addObject:card];
+            }
         }
         [cards removeObjectsInArray:toBeRemoved];
     }
-    
-    NSString* outputString = @"";
+    // add all cards names to attributedString
+    NSMutableAttributedString *outputString = [[NSMutableAttributedString alloc] initWithString:@""];
+    if ([cards count] <= matchNumber && [cards count] >= 1){
+        for(Card* card in cards){
+            [outputString appendAttributedString:[self titleForCard:card showContents:YES]];
+            [outputString appendAttributedString:[[NSAttributedString alloc] initWithString:@""]];
+            
+            if ([cards count] == matchNumber && [[cards firstObject] isMatched])
+                card.selected = NO;
+        }
+    }
     // If we have a match print there was a match
     if ([cards count] == matchNumber && [[cards firstObject] isMatched]) {
-        outputString = [NSString stringWithFormat:@"Matched "];
-        for(Card* card in cards) {
-            outputString = [outputString stringByAppendingString:[card.contents stringByAppendingString:@" "]];
-            [self.cardIgnore addObject:(card)];
-        }
-        outputString = [outputString stringByAppendingString:[NSString stringWithFormat:@"for %d points!",score-self.previousScore ]];
+        [outputString appendAttributedString:[[NSAttributedString alloc]
+                                              initWithString:[NSString stringWithFormat:@"are a match! %d points awarded!",score-self.previousScore]]];
     // if we have a mismatch print there was a mismatch
     } else if ([cards count] == matchNumber){
-        for(Card* card in cards)
-            outputString = [outputString stringByAppendingString:[card.contents stringByAppendingString:@" "]];
-        outputString = [outputString stringByAppendingString:[NSString stringWithFormat:@"don't match! %d point penalty!", abs(score-self.previousScore)]];
+        [outputString appendAttributedString:[[NSAttributedString alloc]
+                                              initWithString:[NSString stringWithFormat:@"don't match! %d point penalty!", abs(score-self.previousScore)]]];
     // if too few cards are selected output only the selected cards
     } else if ([cards count] < matchNumber && [cards count] >= 1){
-        for(Card* card in cards)
-            outputString = [outputString stringByAppendingString:[card.contents stringByAppendingString:@" "]];
-        if([cards count] == 1)
-            outputString = [outputString stringByAppendingString:[NSString stringWithFormat:@"is selected"]];
-        else
-            outputString = [outputString stringByAppendingString:[NSString stringWithFormat:@"are selected"]];
+        if([cards count] == 1){
+            [outputString appendAttributedString:[[NSAttributedString alloc] initWithString:@"is selected."]];
+        }
+        else {
+            [outputString appendAttributedString:[[NSAttributedString alloc] initWithString:@"are selected."]];
+        }
     }
-    return outputString;
+    return (NSAttributedString*) outputString;
 }
 
-- (void)viewHistory:(id)sender {
-    int sliderVal = lroundf([self.slider value]);
-    if([self.gameHistory count]){
-        if(sliderVal+1 < [self.gameHistory count]){
-            [self.displayGameInfo setText:[self.gameHistory objectAtIndex:sliderVal]];
-            [self.displayGameInfo setBackgroundColor:[UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:0.3]];
-        } else
-            [self.displayGameInfo setBackgroundColor:(UIColor.clearColor)];
-    }
-}
-
-- (NSAttributedString *)titleForCard:(Card *)card {
+- (NSAttributedString *)titleForCard:(Card *)card showContents:(BOOL)optional {
     return nil;
-}
-
-- (void)changeSliderRange {
-    int maxVal = [self.gameHistory count] -1;
-    [self.slider setMaximumValue:maxVal] ;
-    [self.slider setValue:maxVal animated:YES];
 }
 
 - (UIImage *)backgroundImageForCard:(Card *)card {
     return nil;
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue
+                 sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"History"]) {
+        if ([segue.destinationViewController isKindOfClass:[HistoryViewController class]]) {
+            [segue.destinationViewController setGameHistory:self.gameHistory];
+        }
+    }
 }
 @end
