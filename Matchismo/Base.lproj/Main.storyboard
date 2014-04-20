@@ -109,7 +109,7 @@
                                     <action selector="touchCardButton:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="FaQ-Dw-Ed3"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score:0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="LoA-vm-r4f">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score: 0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="LoA-vm-r4f">
                                 <rect key="frame" x="20" y="400" width="91" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -343,24 +343,10 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Playing Card Game" id="TaJ-eR-y3g"/>
                     <navigationItem key="navigationItem" title="Playing Card" id="fO4-fl-6fg">
-                        <barButtonItem key="rightBarButtonItem" id="Kye-BH-oTI">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="vTE-tx-Fh5">
-                                <rect key="frame" x="233" y="5" width="71" height="33"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="History">
-                                    <attributedString key="attributedTitle">
-                                        <fragment content="History">
-                                            <attributes>
-                                                <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <font key="NSFont" size="15" name="HelveticaNeue"/>
-                                            </attributes>
-                                        </fragment>
-                                    </attributedString>
-                                </state>
-                                <connections>
-                                    <segue destination="Chj-ed-zsK" kind="push" identifier="History" id="Mv2-8Q-C4J"/>
-                                </connections>
-                            </button>
+                        <barButtonItem key="rightBarButtonItem" title="History" id="bnR-qL-c5K">
+                            <connections>
+                                <segue destination="Chj-ed-zsK" kind="push" identifier="History" id="cLo-ly-Wdw"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
@@ -397,7 +383,7 @@
             </objects>
             <point key="canvasLocation" x="844" y="-215"/>
         </scene>
-        <!--History View Controller - Game History-->
+        <!--History View Controller - History-->
         <scene sceneID="k3A-5k-Q56">
             <objects>
                 <viewController id="Chj-ed-zsK" customClass="HistoryViewController" sceneMemberID="viewController">
@@ -415,7 +401,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Game History" id="PHh-q9-Icg">
+                    <navigationItem key="navigationItem" title="History" id="PHh-q9-Icg">
                         <barButtonItem key="backBarButtonItem" title="Game" id="ND9-SR-Gc0"/>
                     </navigationItem>
                     <connections>
@@ -477,7 +463,7 @@
                                     <action selector="touchCardButton:" destination="Add-eZ-Vmd" eventType="touchUpInside" id="G9C-ax-3Wz"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score:0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="M8s-s1-n2g">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score: 0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="M8s-s1-n2g">
                                 <rect key="frame" x="20" y="400" width="91" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -633,18 +619,9 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Set Card Game" id="jCp-fb-HyV"/>
                     <navigationItem key="navigationItem" title="Set Card" id="Qa3-RN-eGL">
-                        <barButtonItem key="rightBarButtonItem" id="oD1-DH-s9g">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="0MB-Nu-XSM">
-                                <rect key="frame" x="233" y="5" width="71" height="33"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <state key="normal" title="History">
-                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                            </button>
+                        <barButtonItem key="rightBarButtonItem" title="History" id="m2c-Ob-Tgk">
                             <connections>
-                                <segue destination="Chj-ed-zsK" kind="push" identifier="History" id="7RY-wO-Jn2"/>
+                                <segue destination="Chj-ed-zsK" kind="push" identifier="History" id="QlB-EQ-iH8"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -697,12 +674,13 @@
         <image name="PlayingCardIcon" width="30" height="30"/>
         <image name="SetCard" width="64" height="96"/>
     </resources>
+    <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="7RY-wO-Jn2"/>
+        <segue reference="QlB-EQ-iH8"/>
     </inferredMetricsTieBreakers>
 </document>

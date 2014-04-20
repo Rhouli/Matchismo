@@ -9,6 +9,9 @@
 #import "CardGameViewController.h"
 #import "CardMatchingGame.h"
 
+#define FONT_SIZE 16
+#define FONT_HELVETICA @"Helvetica-Light"
+
 @interface CardGameViewController ()
 @property (strong, nonatomic) CardMatchingGame *game;
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
@@ -115,12 +118,14 @@
         }
         [cards removeObjectsInArray:toBeRemoved];
     }
+    
+    UIFont *font = [UIFont fontWithName:FONT_HELVETICA size:FONT_SIZE];
     // add all cards names to attributedString
-    NSMutableAttributedString *outputString = [[NSMutableAttributedString alloc] initWithString:@""];
+    NSMutableAttributedString *outputString = [[NSMutableAttributedString alloc] initWithString:@"" attributes:@{ NSFontAttributeName:font}];
     if ([cards count] <= matchNumber && [cards count] >= 1){
         for(Card* card in cards){
             [outputString appendAttributedString:[self titleForCard:card showContents:YES]];
-            [outputString appendAttributedString:[[NSAttributedString alloc] initWithString:@""]];
+            [outputString appendAttributedString:[[NSAttributedString alloc] initWithString:@" " attributes:@{ NSFontAttributeName:font}]];
             
             if ([cards count] == matchNumber && [[cards firstObject] isMatched])
                 card.selected = NO;
@@ -129,18 +134,18 @@
     // If we have a match print there was a match
     if ([cards count] == matchNumber && [[cards firstObject] isMatched]) {
         [outputString appendAttributedString:[[NSAttributedString alloc]
-                                              initWithString:[NSString stringWithFormat:@"are a match! %d points awarded!",score-self.previousScore]]];
+                                              initWithString:[NSString stringWithFormat:@"are a match! %d points awarded!",score-self.previousScore] attributes:@{ NSFontAttributeName:font}]];
     // if we have a mismatch print there was a mismatch
     } else if ([cards count] == matchNumber){
         [outputString appendAttributedString:[[NSAttributedString alloc]
-                                              initWithString:[NSString stringWithFormat:@"don't match! %d point penalty!", abs(score-self.previousScore)]]];
+                                              initWithString:[NSString stringWithFormat:@"don't match! %d point penalty!", abs(score-self.previousScore)] attributes:@{ NSFontAttributeName:font}]];
     // if too few cards are selected output only the selected cards
     } else if ([cards count] < matchNumber && [cards count] >= 1){
         if([cards count] == 1){
-            [outputString appendAttributedString:[[NSAttributedString alloc] initWithString:@"is selected."]];
+            [outputString appendAttributedString:[[NSAttributedString alloc] initWithString:@"is selected." attributes:@{ NSFontAttributeName:font}]];
         }
         else {
-            [outputString appendAttributedString:[[NSAttributedString alloc] initWithString:@"are selected."]];
+            [outputString appendAttributedString:[[NSAttributedString alloc] initWithString:@"are selected." attributes:@{ NSFontAttributeName:font}]];
         }
     }
     return (NSAttributedString*) outputString;
