@@ -172,18 +172,18 @@
 {
     [super viewDidLoad];
     
-    UIImage *selectedImage0 = [UIImage imageNamed:@"PlayingCardTabIconSelected"];
-    UIImage *unselectedImage0 = [UIImage imageNamed:@"PlayingCardTabIcon"];
+    UIImage *selected0 = [UIImage imageNamed:@"PlayingCardTabIconSelected"];
+    UIImage *unselected0 = [UIImage imageNamed:@"PlayingCardTabIcon"];
     
-    UIImage *selectedImage1 = [UIImage imageNamed:@"SetCardTabIconSelected"];
-    UIImage *unselectedImage1 = [UIImage imageNamed:@"SetCardTabIcon"];
+    UIImage *selected1 = [UIImage imageNamed:@"SetCardTabIconSelected"];
+    UIImage *unselected1 = [UIImage imageNamed:@"SetCardTabIcon"];
     
     UITabBar *tabBar = self.tabBarController.tabBar;
     UITabBarItem *item0 = [tabBar.items objectAtIndex:0];
     UITabBarItem *item1 = [tabBar.items objectAtIndex:1];
     
-    [item0 setFinishedSelectedImage:selectedImage0 withFinishedUnselectedImage:unselectedImage0];
-    [item1 setFinishedSelectedImage:selectedImage1 withFinishedUnselectedImage:unselectedImage1];
+    [item0 setFinishedSelectedImage:selected0 withFinishedUnselectedImage:unselected0];
+    [item1 setFinishedSelectedImage:selected1 withFinishedUnselectedImage:unselected1];
 }
 
 @end
