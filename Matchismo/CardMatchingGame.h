@@ -21,5 +21,6 @@
 - (void)setMatchNum:(NSInteger)matchNum;
 
 @property (nonatomic, readonly) NSInteger score;
-
+@property (nonatomic, readonly) NSInteger recentScore;
+@property (nonatomic, readonly) NSArray *previousChosenCards;
 @end

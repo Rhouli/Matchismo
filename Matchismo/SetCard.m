@@ -11,20 +11,34 @@
 @implementation SetCard
 
 - (int)match:(NSArray *)otherCards {
-    int score = 0;
-    NSMutableArray *otherCardsM = [otherCards mutableCopy];
-    for(SetCard* otherCard in otherCardsM) {
-        if ([otherCard.symbol isEqual:self.symbol]) {
-            score += 1;
-        }
-        otherCard.selected = YES;
+    NSMutableOrderedSet *symbols = [[NSMutableOrderedSet alloc] init];
+    [symbols addObject:self.symbol];
+    NSMutableOrderedSet *num = [[NSMutableOrderedSet alloc] init];
+    [num addObject:self.number];
+    NSMutableOrderedSet *colors = [[NSMutableOrderedSet alloc] init];
+    [colors addObject:self.color];
+    NSMutableOrderedSet *shades = [[NSMutableOrderedSet alloc] init];
+    [shades addObject:self.shade];
+
+    for(SetCard* otherCard in otherCards) {
+        [symbols addObject:otherCard.symbol];
+        [num addObject:otherCard.number];
+        [colors addObject:otherCard.color];
+        [shades addObject:otherCard.shade];
     }
-    return score*4;
+    int numCards = [otherCards count]+1;
+    if (([symbols count] == numCards || [symbols count] == 1) &&
+        ([num count] == numCards || [num count] == 1) &&
+        ([colors count] == numCards || [colors count] == 1) &&
+        ([shades count] == numCards || [shades count] == 1)){
+        return 4;
+    }
+    return 0;
 }
 
 - (NSString *)contents
 {
-    return [NSString stringWithFormat:@"%@, %@, %@", self.symbol, self.color, self.shade];
+    return [NSString stringWithFormat:@"%@, %@, %@, %@", self.symbol, self.color, self.shade, self.number];
 }
 
 @synthesize symbol = _symbol, shade = _shade, color = _color;
@@ -60,6 +74,11 @@
     return _color ? _color: @"?";
 }
 
+- (NSString *)number
+{
+    return _number ? _number: @"?";
+}
+
 + (NSArray *)validSymbols
 {
     return @[@"■",@"●",@"▲"];
@@ -67,16 +86,16 @@
 
 + (NSArray *)validColors
 {
-    return @[@"red"];
+    return @[@"red", @"green", @"purple"];
 }
 
 + (NSArray *)validShades
 {
-    return @[@"none"];
+    return @[@"solid", @"striped", @"open"];
 }
 
-+ (int)maxNumber
++ (NSArray *)validNum
 {
-    return 81/3;
+    return @[@"1", @"2", @"3"];
 }
 @end

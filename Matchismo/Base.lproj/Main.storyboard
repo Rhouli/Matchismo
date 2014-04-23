@@ -631,7 +631,6 @@
                                 <rect key="frame" x="240" y="393" width="64" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <segments>
-                                    <segment title="2"/>
                                     <segment title="3"/>
                                     <segment title="4"/>
                                 </segments>
@@ -765,6 +764,6 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="cLo-ly-Wdw"/>
+        <segue reference="QlB-EQ-iH8"/>
     </inferredMetricsTieBreakers>
 </document>

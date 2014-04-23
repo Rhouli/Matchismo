@@ -12,8 +12,8 @@
 
 - (int)match:(NSArray *)otherCards {
     int score = 0;
-    NSMutableArray *otherCardsM = [otherCards mutableCopy];
-    for(PlayingCard* otherCard in otherCardsM) {
+
+    for(PlayingCard* otherCard in otherCards) {
         if (otherCard.rank == self.rank) {
             score += 4;
         } else if ([otherCard.suit isEqualToString:self.suit]) {
@@ -21,6 +21,12 @@
         }
         otherCard.selected = YES;
     }
+    if ([otherCards count] > 1){
+        PlayingCard* card = [otherCards firstObject];
+        NSArray* newOtherCards = [otherCards subarrayWithRange:NSMakeRange(1, [otherCards count]-1)];
+        score += [card match:newOtherCards];
+    }
+    
     return score;
 }
 

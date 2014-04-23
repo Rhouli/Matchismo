@@ -10,8 +10,10 @@
 
 @interface CardMatchingGame()
 @property (nonatomic, readwrite) NSInteger score;
+@property (nonatomic, readwrite) NSInteger recentScore;
 @property (nonatomic, strong) NSMutableArray *cards;
 @property (nonatomic, readwrite) NSInteger matchNum;
+@property (nonatomic, strong) NSArray *previousChosenCards;
 @end
 
 @implementation CardMatchingGame
@@ -96,14 +98,13 @@ static const int DEFAULT_MATCH_NUM = 2;
             [choosenCards addObject:card];
             // iterate through each card and check if it matches with any of the
             // other cards
+            self.recentScore = self.score;
             if ([choosenCards count] == self.matchNum){
                 int matchScore = 0;
                 NSMutableArray *choosenCards_tmp = [choosenCards mutableCopy];
-                while ([choosenCards_tmp count] > 1){
-                    Card* currCard = [choosenCards_tmp firstObject];
-                    [choosenCards_tmp removeObject:currCard];
-                    matchScore += [currCard match:choosenCards_tmp];
-                }
+                Card* currCard = [choosenCards_tmp firstObject];
+                [choosenCards_tmp removeObject:currCard];
+                matchScore += [currCard match:choosenCards_tmp];
                 if (matchScore) {
                     self.score += matchScore*MATCH_BONUS;
                     for(Card* otherCard in choosenCards)
@@ -114,6 +115,8 @@ static const int DEFAULT_MATCH_NUM = 2;
                         otherCard.chosen = NO;
                     }
                 }
+                self.previousChosenCards = [choosenCards arrayByAddingObject:card];
+                self.recentScore = self.score - self.recentScore;
             }
             card.chosen = YES;
             card.selected = YES;

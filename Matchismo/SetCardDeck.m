@@ -19,11 +19,12 @@
         for (NSString *symbol in [SetCard validSymbols]) {
             for (NSString *color in [SetCard validColors]){
                 for (NSString *shade in [SetCard validShades]){
-                    for (int i = 0; i < [SetCard maxNumber]; i++){
+                    for (NSString *num in [SetCard validNum]){
                         SetCard *card = [[SetCard alloc] init];
                         card.symbol = symbol;
                         card.color = color;
                         card.shade = shade;
+                        card.number = num;
                         [self addCard:card];
                     }
                 }

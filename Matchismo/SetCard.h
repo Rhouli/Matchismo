@@ -13,10 +13,11 @@
 @property (strong, nonatomic) NSString *symbol;
 @property (strong, nonatomic) NSString *color;
 @property (strong, nonatomic) NSString *shade;
+@property (strong, nonatomic) NSString *number;
 
 + (NSArray *)validSymbols;
 + (NSArray *)validColors;
 + (NSArray *)validShades;
-+ (int)maxNumber;
++ (NSArray *)validNum;
 
 @end
