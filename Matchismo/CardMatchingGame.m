@@ -88,6 +88,9 @@ static const int DEFAULT_MATCH_NUM = 2;
     if (!card.isMatched) {
         if (card.isChosen) {
             card.chosen = NO;
+            NSMutableArray *tempArray = [self.previousChosenCards mutableCopy];
+            [tempArray removeObject:card];
+            self.previousChosenCards = [tempArray copy];
         } else {
             // count the number of chosen cards including the current card
             NSMutableArray *choosenCards = [NSMutableArray array];
@@ -98,13 +101,11 @@ static const int DEFAULT_MATCH_NUM = 2;
             [choosenCards addObject:card];
             // iterate through each card and check if it matches with any of the
             // other cards
-            self.recentScore = self.score;
+            self.recentScore = 0;
+            self.previousChosenCards = choosenCards;
             if ([choosenCards count] == self.matchNum){
-                int matchScore = 0;
-                NSMutableArray *choosenCards_tmp = [choosenCards mutableCopy];
-                Card* currCard = [choosenCards_tmp firstObject];
-                [choosenCards_tmp removeObject:currCard];
-                matchScore += [currCard match:choosenCards_tmp];
+                self.recentScore = self.score;
+                int matchScore = [[choosenCards firstObject] match:[choosenCards subarrayWithRange:NSMakeRange(1, [choosenCards count]-1)]];
                 if (matchScore) {
                     self.score += matchScore*MATCH_BONUS;
                     for(Card* otherCard in choosenCards)
@@ -115,7 +116,6 @@ static const int DEFAULT_MATCH_NUM = 2;
                         otherCard.chosen = NO;
                     }
                 }
-                self.previousChosenCards = [choosenCards arrayByAddingObject:card];
                 self.recentScore = self.score - self.recentScore;
             }
             card.chosen = YES;

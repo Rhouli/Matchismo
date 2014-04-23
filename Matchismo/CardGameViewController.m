@@ -18,7 +18,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *changeMatchNumberButton;
 @property (weak, nonatomic) IBOutlet UILabel *displayGameInfo;
-@property NSInteger previousScore;
 @end
 
 @implementation CardGameViewController
@@ -27,6 +26,7 @@
 
 - (CardMatchingGame *)game {
     if(!_game) _game = [[CardMatchingGame alloc] initWithCardCount:[self.cardButtons count] usingDeck:[self createDeck]];
+    [_game setMatchNum:[[self.changeMatchNumberButton titleForSegmentAtIndex:[self.changeMatchNumberButton selectedSegmentIndex]] integerValue]];
     return _game;
 }
 
@@ -49,30 +49,24 @@
 
 // restart the game and update the UI
 - (IBAction)ResetGame:(UIButton *)sender {
-    // Create a new game
+    //Create a new game
     [self.game newGame:[self createDeck]];
     [self updateUI];
     self.displayGameInfo.text = @"";
     self.gameHistory = nil;
     // enable match selector
     _changeMatchNumberButton.userInteractionEnabled = YES;
+    self.game = nil;
 }
 
 // change the match number to form 2->3 or 3->2 and then restart the game
 // and update the UI
-- (IBAction)changeMatchNumber:(id)sender {
-    // Figure out which button is selected
-    NSString *text = [(UISegmentedControl*)sender titleForSegmentAtIndex: [sender selectedSegmentIndex]];
-    
+- (void)changeMatchNumber:(UISegmentedControl*)sender {
     // Match the selected button to its corresponding matchNumber
-    int matchNumber = [text integerValue];
-    [self.game setMatchNum:matchNumber];
+    [self.game setMatchNum:[[sender titleForSegmentAtIndex:[sender selectedSegmentIndex]] integerValue]];
 }
 
 - (void)updateUI {
-    self.displayGameInfo.attributedText = [self titleForGameInfo:self.game.score];
-    self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
-    
     // update buttons
     for (UIButton *cardButton in self.cardButtons) {
         int cardButtonIndex = [self.cardButtons
@@ -84,68 +78,43 @@
         
         cardButton.enabled = !card.isMatched;
     }
+    // update score and display previous move
+    self.displayGameInfo.attributedText = [self titleForGameInfo:self.game.score];
+    self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
+    
     // add display to history
     if (![self.displayGameInfo.text isEqualToString:@""])
         [self.gameHistory addObject:self.displayGameInfo.attributedText];
-    self.previousScore = self.game.score;
 }
 
 // find output of the last move. Prints out nothing if we have no selection
 - (NSAttributedString *)titleForGameInfo:(NSInteger) score {
-    NSMutableOrderedSet *cards = [NSMutableOrderedSet orderedSet];
-    int matchNumber = [[(UISegmentedControl*)self.changeMatchNumberButton
-                        titleForSegmentAtIndex:[self.changeMatchNumberButton selectedSegmentIndex]] integerValue];
-    
-    // Check for active cards
-    for (UIButton *cardButton in self.cardButtons) {
-        int cardButtonIndex = [self.cardButtons
-                               indexOfObject:cardButton];
-        Card *card = [self.game cardAtIndex:cardButtonIndex];
-        // if card is selected add it. If it is not chosen unselect it
-        if (card.selected){
-            [cards addObject:card];
-            if (!card.chosen)
-                card.selected = NO;
-        }
-    }
-    // User has unselected a card so remove card from output
-    if([cards count] < matchNumber){
-        NSMutableArray *toBeRemoved = [NSMutableArray array];
-        for (Card* card in cards){
-            if(!card.chosen){
-                [toBeRemoved addObject:card];
-            }
-        }
-        [cards removeObjectsInArray:toBeRemoved];
-    }
-    
     UIFont *font = [UIFont fontWithName:FONT_HELVETICA size:FONT_SIZE];
-    // add all cards names to attributedString
+
     NSMutableAttributedString *outputString = [[NSMutableAttributedString alloc] initWithString:@"" attributes:@{ NSFontAttributeName:font}];
-    if ([cards count] <= matchNumber && [cards count] >= 1){
-        for(Card* card in cards){
+
+    if ([self.game.previousChosenCards count] > 0){
+        // add all cards names to attributedString
+        for(Card* card in self.game.previousChosenCards){
             [outputString appendAttributedString:[self titleForCard:card showContents:YES]];
             [outputString appendAttributedString:[[NSAttributedString alloc] initWithString:@" " attributes:@{ NSFontAttributeName:font}]];
-            
-            if ([cards count] == matchNumber && [[cards firstObject] isMatched])
-                card.selected = NO;
         }
-    }
-    // If we have a match print there was a match
-    if ([cards count] == matchNumber && [[cards firstObject] isMatched]) {
-        [outputString appendAttributedString:[[NSAttributedString alloc]
-                                              initWithString:[NSString stringWithFormat:@"are a match! %d points awarded!",score-self.previousScore] attributes:@{ NSFontAttributeName:font}]];
-    // if we have a mismatch print there was a mismatch
-    } else if ([cards count] == matchNumber){
-        [outputString appendAttributedString:[[NSAttributedString alloc]
-                                              initWithString:[NSString stringWithFormat:@"don't match! %d point penalty!", abs(score-self.previousScore)] attributes:@{ NSFontAttributeName:font}]];
-    // if too few cards are selected output only the selected cards
-    } else if ([cards count] < matchNumber && [cards count] >= 1){
-        if([cards count] == 1){
-            [outputString appendAttributedString:[[NSAttributedString alloc] initWithString:@"is selected." attributes:@{ NSFontAttributeName:font}]];
-        }
-        else {
-            [outputString appendAttributedString:[[NSAttributedString alloc] initWithString:@"are selected." attributes:@{ NSFontAttributeName:font}]];
+        // If we have a match print there was a match
+        if (self.game.recentScore > 0)
+            [outputString appendAttributedString:[[NSAttributedString alloc]
+                                                  initWithString:[NSString stringWithFormat:@"are a match! %d points awarded!",self.game.recentScore] attributes:@{ NSFontAttributeName:font}]];
+        // if we have a mismatch print there was a mismatch
+        else if (self.game.recentScore < 0){
+            [outputString appendAttributedString:[[NSAttributedString alloc]
+                                                  initWithString:[NSString stringWithFormat:@"don't match! %d point penalty!", abs(self.game.recentScore)] attributes:@{ NSFontAttributeName:font}]];
+            // if too few cards are selected output only the selected cards
+        } else {
+            if([self.game.previousChosenCards count] == 1){
+                [outputString appendAttributedString:[[NSAttributedString alloc] initWithString:@"is selected." attributes:@{ NSFontAttributeName:font}]];
+            }
+            else {
+                [outputString appendAttributedString:[[NSAttributedString alloc] initWithString:@"are selected." attributes:@{ NSFontAttributeName:font}]];
+            }
         }
     }
     return (NSAttributedString*) outputString;
