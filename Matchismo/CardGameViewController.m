@@ -85,7 +85,7 @@
                 [self.cardGridView addSubview:currentCardView];
                 
             }
-            else {
+        } else {
                 currentCardView = self.activeCards[indexOfView];
                 if (card.matched){
                     [currentCardView removeFromSuperview];
@@ -95,7 +95,6 @@
                 }
             }
         }
-    }
     self.cardGrid.minimumNumberOfCells = [self.activeCards count];
     for(NSUInteger i = 0; i < [self.activeCards count]; i++){
         CGRect currentFrame = [self.cardGrid frameOfCellAtRow:i / self.cardGrid.columnCount
@@ -103,9 +102,6 @@
         currentFrame = CGRectInset(currentFrame, currentFrame.size.width*SPACING, currentFrame.size.height*SPACING);
         ((UIView *)self.activeCards[i]).frame = currentFrame;
     }
-    
-    // update grid when adding new cards
-    
     
     // update score
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
@@ -122,20 +118,22 @@
 }
 
 - (void)touchCard:(UITapGestureRecognizer *)tap {
+    
     if (tap.state == UIGestureRecognizerStateEnded) {
-        [self.game chooseCardAtIndex:tap.view.tag];
+        //[self.game chooseCardAtIndex:tap.view.tag];
         Card *card = [self.game cardAtIndex:tap.view.tag];
-       [UIView transitionWithView:tap.view
+        [UIView transitionWithView:tap.view
                           duration:0.4
-                           options:UIViewAnimationOptionTransitionFlipFromRight animations:^{
+                           options:UIViewAnimationOptionTransitionFlipFromRight
+                        animations:^{
+                            card.chosen = !card.chosen;
                             [self updateView:tap.view card:card];
-                       }
+                          }
                         completion:^(BOOL finished){
                             card.chosen = !card.chosen;
                             [self.game chooseCardAtIndex:tap.view.tag];
                             [self updateUI];
                         }];
-        [self updateUI];
     }
 }
 - (IBAction)dealThreeNewCards:(UIButton *)sender {
@@ -150,7 +148,7 @@
 {
     [super viewDidLoad];
     
-    self.removeCardWhenMatched = NO;
+    //self.removeCardWhenMatched = NO;
 
     UIImage *selected0 = [UIImage imageNamed:@"PlayingCardTabIconSelected"];
     UIImage *unselected0 = [UIImage imageNamed:@"PlayingCardTabIcon"];
