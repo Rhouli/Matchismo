@@ -38,8 +38,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.cardNumber = 30;
-    self.cardSize = CGSizeMake(80.0, 80.0);
+    self.cardNumber = 36;
+    self.cardSize = CGSizeMake(100.0, 140.0);
     [self updateUI];
 }
 

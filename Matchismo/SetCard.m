@@ -26,7 +26,7 @@
         [colors addObject:otherCard.color];
         [shades addObject:otherCard.shade];
     }
-    int numCards = [otherCards count]+1;
+    NSUInteger numCards = [otherCards count]+1;
     if (([symbols count] == numCards || [symbols count] == 1) &&
         ([num count] == numCards || [num count] == 1) &&
         ([colors count] == numCards || [colors count] == 1) &&

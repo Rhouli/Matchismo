@@ -70,17 +70,17 @@
 // draw card box
 - (void)drawRect:(CGRect)rect {
     UIBezierPath *cardRect = [UIBezierPath bezierPathWithRoundedRect:self.bounds
-                                                             cornerRadius:12.0];
+                                                             cornerRadius:10.0];
     [cardRect addClip];
     [[UIColor whiteColor] setFill];
     UIRectFill(self.bounds);
     
     if (!self.chosen) {
         [[UIColor colorWithWhite:0.8 alpha:1.0] setStroke];
-        cardRect.lineWidth /= 4.0;
+        cardRect.lineWidth /= 10.0;
     } else {
-        [[UIColor colorWithRed:0.1 green:0.1 blue:0.1 alpha:0.4] setFill];
-        cardRect.lineWidth *= 4.0;
+        [[UIColor colorWithRed:0.1 green:0.1 blue:0.1 alpha:0.2] setFill];
+        cardRect.lineWidth *= 10.0;
     }
     
     [cardRect stroke];
@@ -110,6 +110,7 @@
         }
     }
 }
+
 - (void)drawSymbol:(CGPoint)point {
     if ([self.symbol isEqualToString:@"diamond"])
         [self drawDiamond:point];
@@ -118,6 +119,7 @@
     else if ([self.symbol isEqualToString:@"squiggle"])
         [self drawSquiggle:point];
 }
+
 - (void)drawDiamond:(CGPoint)point {
     CGFloat dx = self.bounds.size.width  * DIAMOND_W/2.0;
     CGFloat dy = self.bounds.size.height * DIAMOND_H/2.0;
@@ -162,37 +164,39 @@
 - (void)drawSquiggle:(CGPoint)point {
     CGFloat dx = self.bounds.size.width  * SQUIGGLE_W/2.0;
     CGFloat dy = self.bounds.size.height * SQUIGGLE_H/2.0;
-    CGFloat dxSquiggle = dx*0.9;
-    CGFloat dySquiggle = dy*0.6;
+    CGFloat dxSquiggle = dx*1.0;
+    CGFloat dySquiggle = dy*1.0;
     
     CGFloat xStart = point.x - dx;
     CGFloat yStart = point.y - dy;
     CGFloat xEnd = point.x + dx;
     CGFloat yEnd = point.y + dy;
     
-    CGPoint bottomLeft = CGPointMake(xStart, yStart);
-    CGPoint topLeft = CGPointMake(xStart, yEnd);
-    CGPoint bottomRight = CGPointMake(xEnd, yStart);
-    CGPoint topRight = CGPointMake(xEnd, yEnd);
+    CGPoint bottomRight = CGPointMake(xEnd, yEnd);
+    CGPoint topRight = CGPointMake(xEnd, yStart);
+    CGPoint bottomLeft = CGPointMake(xStart, yEnd);
+    CGPoint topLeft = CGPointMake(xStart, yStart);
     
     UIBezierPath *squiggle = [[UIBezierPath alloc] init];
-    [squiggle moveToPoint:bottomLeft];
-    [squiggle addQuadCurveToPoint:bottomRight
-                      controlPoint:CGPointMake(point.x - dxSquiggle,
-                                               yStart - dySquiggle)];
-    [squiggle addCurveToPoint:topRight
-            controlPoint1:CGPointMake(xEnd + dxSquiggle,
-                                      yStart + dySquiggle)
-            controlPoint2:CGPointMake(xEnd - dxSquiggle,
-                                      yEnd - dySquiggle)];
-    [squiggle addQuadCurveToPoint:topLeft
-                  controlPoint:CGPointMake(point.x + dxSquiggle,
-                                           point.y + dySquiggle)];
-    [squiggle addCurveToPoint:bottomLeft
-            controlPoint1:CGPointMake(xStart - dxSquiggle,
-                                      yEnd + dySquiggle)
-            controlPoint2:CGPointMake(xStart - dxSquiggle,
-                                      yStart + dySquiggle)];
+    [squiggle moveToPoint:bottomRight];
+    [squiggle addQuadCurveToPoint:bottomLeft
+                     controlPoint:CGPointMake(point.x + dxSquiggle,
+                                              yEnd + dySquiggle)];
+    [squiggle addCurveToPoint:topLeft
+                controlPoint1:CGPointMake(xStart - dxSquiggle,
+                                          yEnd - dySquiggle)
+                controlPoint2:CGPointMake(xStart + dxSquiggle,
+                                          yStart + dySquiggle)];
+    [squiggle addQuadCurveToPoint:topRight
+                     controlPoint:CGPointMake(point.x - dxSquiggle,
+                                              yStart - dySquiggle)];
+    [squiggle addCurveToPoint:bottomRight
+                controlPoint1:CGPointMake(xEnd + dxSquiggle,
+                                          yStart + dySquiggle)
+                controlPoint2:CGPointMake(xEnd - dxSquiggle,
+                                          yEnd - dySquiggle)];
+    
+   
     
     squiggle.lineWidth = self.bounds.size.width*SYMBOL_W;
     [self shading:squiggle];
@@ -210,6 +214,7 @@
         return [UIColor greenColor];
     return nil;
 }
+
 // drawing the shade
 
 - (void)shading:(UIBezierPath *)path {

@@ -14,6 +14,8 @@
 @property (nonatomic) NSUInteger cardNumber;
 @property (nonatomic) CGSize cardSize;
 @property (nonatomic) BOOL removeCardWhenMatched;
+@property (nonatomic) NSUInteger matchNumber;
+
 // abstract
 - (Deck *)createDeck;
 - (void)updateUI;

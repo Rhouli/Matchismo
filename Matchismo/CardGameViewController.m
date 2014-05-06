@@ -34,7 +34,7 @@
 - (CardMatchingGame *)game {
     if(!_game) _game = [[CardMatchingGame alloc] initWithCardCount:self.cardNumber
                                                          usingDeck:[self createDeck]];
-    [_game setMatchNum:3];
+    [_game setMatchNum:self.matchNumber];
     return _game;
 }
 
@@ -69,23 +69,23 @@
     // see if a view exists for a given card and if not add a view
     for (NSUInteger indexOfCard = 0; indexOfCard < (int) self.game.dealtCardNum; indexOfCard++){
         Card *card = [self.game cardAtIndex:indexOfCard];
-        NSUInteger indexOfView = [self.activeCards indexOfObjectPassingTest:^BOOL(id obj, NSUInteger index, BOOL *done) {
-            if(((UIView *) obj).tag == indexOfCard)
-                return YES;
-            return NO;
-        }];
         UIView *currentCardView;
-        if (indexOfView == NSNotFound){
+        NSUInteger indexOfView = [self.activeCards indexOfObjectPassingTest:^BOOL(id obj, NSUInteger index, BOOL *done) {
+            UIView* tmpView = (UIView*) obj;
+            if(tmpView.tag != indexOfCard)
+                return NO;
+            return YES;
+        }];
+        if (indexOfView == NSIntegerMax){
             if(!card.matched){
                 currentCardView = [self makeCardView:card];
-                currentCardView.tag = indexOfCard;
                 [currentCardView addGestureRecognizer:[[UITapGestureRecognizer alloc]
                                                        initWithTarget:self
                                                        action:@selector(touchCard:)]];
                 [self.activeCards addObject:currentCardView];
                 indexOfView = [self.activeCards indexOfObject:currentCardView];
                 [self.cardGridView addSubview:currentCardView];
-                
+                currentCardView.tag = indexOfCard;
             }
         } else {
                 currentCardView = self.activeCards[indexOfView];
@@ -108,6 +108,8 @@
                 }
             }
         }
+    
+    // once all active cards are found place them in the grid
     self.cardGrid.minimumNumberOfCells = [self.activeCards count];
     
     for(NSUInteger i = 0; i < [self.activeCards count]; i++){
@@ -126,17 +128,13 @@
     }
     
     // update score
-    self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
+    self.scoreLabel.text = [NSString stringWithFormat:@"Score: %ld", self.game.score];
 }
 
 - (UIView *)makeCardView:(Card *)card {
     UIView *view = [[UIView alloc] init];
     [self updateView:view card:card];
     return view;
-}
-
-- (void)updateView:(UIView *)view card:(Card*)card {
-    //view.backgroundColor = [UIColor blueColor];
 }
 
 - (void)touchCard:(UITapGestureRecognizer *)tap {
@@ -171,64 +169,69 @@
     [self updateUI];
 }
 
-#define RESISTANCE_TO_PILING 40.0
-
-- (IBAction)gatherCardsIntoPile:(UIPinchGestureRecognizer *)gesture {
-    if ((gesture.state == UIGestureRecognizerStateChanged) ||
-        (gesture.state == UIGestureRecognizerStateEnded)) {
+- (IBAction)createCardStack:(UIPinchGestureRecognizer *)pinch {
+    if ((pinch.state == UIGestureRecognizerStateChanged)){
         if (!self.stackCards) {
-            CGPoint center = [gesture locationInView:self.cardGridView];
             self.stackCards= [[UIDynamicAnimator alloc] initWithReferenceView:self.cardGridView];
-            UIDynamicItemBehavior *item = [[UIDynamicItemBehavior alloc] initWithItems:self.activeCards];
-            item.resistance = RESISTANCE_TO_PILING;
-            [self.stackCards addBehavior:item];
-            for (UIView *cardView in self.activeCards) {
-                UISnapBehavior *snap = [[UISnapBehavior alloc] initWithItem:cardView snapToPoint:center];
-                [self.stackCards addBehavior:snap];
+            for (UIView* view in self.activeCards) {
+                [self.stackCards addBehavior:[[UISnapBehavior alloc]
+                                              initWithItem:view
+                                              snapToPoint:self.cardGridView.center]];
             }
         }
     }
 }
 
-- (IBAction)panPile:(UIPanGestureRecognizer *)gesture {
+- (IBAction)moveStack:(UIPanGestureRecognizer *)pan {
+    CGPoint panLocation = [pan locationInView:self.cardGridView];
     if (self.stackCards) {
-        CGPoint gesturePoint = [gesture locationInView:self.cardGridView];
-        if (gesture.state == UIGestureRecognizerStateBegan) {
-            for (UIView *cardView in self.activeCards) {
-                UIAttachmentBehavior *attachment = [[UIAttachmentBehavior alloc] initWithItem:cardView
-                                                                             attachedToAnchor:gesturePoint];
-                [self.stackCards addBehavior:attachment];
-            }
-            for (UIDynamicBehavior *behaviour in self.stackCards.behaviors) {
-                if ([behaviour isKindOfClass:[UISnapBehavior class]]) {
-                    [self.stackCards removeBehavior:behaviour];
-                }
-            }
-        } else if (gesture.state == UIGestureRecognizerStateChanged) {
-            for (UIDynamicBehavior *behaviour in self.stackCards.behaviors) {
-                if ([behaviour isKindOfClass:[UIAttachmentBehavior class]]) {
-                    ((UIAttachmentBehavior *)behaviour).anchorPoint = gesturePoint;
-                }
-            }
-        } else if (gesture.state == UIGestureRecognizerStateEnded) {
-            for (UIDynamicBehavior *behaviour in self.stackCards.behaviors) {
-                if ([behaviour isKindOfClass:[UIAttachmentBehavior class]]) {
-                    [self.stackCards removeBehavior:behaviour];
-                }
-            }
-            for (UIView *cardView in self.activeCards) {
-                UISnapBehavior *snap = [[UISnapBehavior alloc] initWithItem:cardView snapToPoint:gesturePoint];
-                [self.stackCards addBehavior:snap];
+        for (UIView *currentView in self.activeCards) {
+            if (pan.state == UIGestureRecognizerStateBegan)
+                [self.stackCards addBehavior:[[UIAttachmentBehavior alloc] initWithItem:currentView
+                                                                       attachedToAnchor:panLocation]];
+            else if (pan.state == UIGestureRecognizerStateEnded)
+                [self.stackCards addBehavior:[[UISnapBehavior alloc] initWithItem:currentView
+                                                                      snapToPoint:panLocation]];
+        }
+        for (UIDynamicBehavior *dynamicBehavior in self.stackCards.behaviors){
+            if (pan.state == UIGestureRecognizerStateBegan) {
+                if ([dynamicBehavior isKindOfClass:[UISnapBehavior class]])
+                    [self.stackCards removeBehavior:dynamicBehavior];
+            } else if (pan.state == UIGestureRecognizerStateChanged) {
+                if ([dynamicBehavior isKindOfClass:[UIAttachmentBehavior class]])
+                    ((UIAttachmentBehavior *)dynamicBehavior).anchorPoint = panLocation;
+            } else if (pan.state == UIGestureRecognizerStateEnded) {
+                if ([dynamicBehavior isKindOfClass:[UIAttachmentBehavior class]])
+                    [self.stackCards removeBehavior:dynamicBehavior];
             }
         }
     }
 }
-- (void)viewDidLoad
-{
+
+- (void)updateView:(UIView *)view card:(Card*)card{
+    //do nothing
+}
+
+// if phone changes orientation set grid size to card grid view size
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+    self.cardGrid.size = self.cardGridView.bounds.size;
+    [self updateUI];
+}
+
+-(void)willRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+    self.cardGrid.size = self.cardGridView.bounds.size;
+    [self updateUI];
+}
+
+
+
+- (BOOL)shouldAutomaticallyForwardRotationMethods { return YES;}
+
+- (void)viewDidLoad {
     [super viewDidLoad];
     
-    //self.removeCardWhenMatched = NO;
-
+    self.matchNumber = 2;
+    
     UIImage *selected0 = [UIImage imageNamed:@"PlayingCardTabIconSelected"];
     UIImage *unselected0 = [UIImage imageNamed:@"PlayingCardTabIcon"];
     
@@ -243,4 +246,8 @@
     [item1 setFinishedSelectedImage:selected1 withFinishedUnselectedImage:unselected1];
 }
 
+- (void)viewWillAppear {
+    self.cardGrid.size = self.cardGridView.bounds.size;
+    [self updateUI];
+}
 @end

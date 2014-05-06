@@ -56,7 +56,7 @@ static const int DEFAULT_MATCH_NUM = 2;
 // setting the score back to 0
 - (void)newGame:(Deck *)deck {
     _deck = deck;
-    int count = [self.cards count];
+    NSUInteger count = [self.cards count];
     NSMutableArray *discardItems = [NSMutableArray array];
     
     // remove cards in cards array

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		943F5E5E19199588006575F3 /* TabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 943F5E5D19199588006575F3 /* TabBarViewController.m */; };
 		9462EBF519022B400003B966 /* SetCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 9462EBF419022B400003B966 /* SetCard.m */; };
 		9462EBF819022B580003B966 /* SetCardDeck.m in Sources */ = {isa = PBXBuildFile; fileRef = 9462EBF719022B580003B966 /* SetCardDeck.m */; };
 		9462EBFB190245E20003B966 /* SetCardGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9462EBFA190245E20003B966 /* SetCardGameViewController.m */; };
@@ -47,6 +48,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		943F5E5C19199588006575F3 /* TabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarViewController.h; sourceTree = "<group>"; };
+		943F5E5D19199588006575F3 /* TabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabBarViewController.m; sourceTree = "<group>"; };
 		9462EBF319022B400003B966 /* SetCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetCard.h; sourceTree = "<group>"; };
 		9462EBF419022B400003B966 /* SetCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetCard.m; sourceTree = "<group>"; };
 		9462EBF619022B580003B966 /* SetCardDeck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetCardDeck.h; sourceTree = "<group>"; };
@@ -245,6 +248,8 @@
 		94CD9D1818EF9AFB00714E55 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				943F5E5C19199588006575F3 /* TabBarViewController.h */,
+				943F5E5D19199588006575F3 /* TabBarViewController.m */,
 				94ED1D0018F7601D000E17A2 /* PlayingCardGameViewController.h */,
 				94ED1D0118F7601D000E17A2 /* PlayingCardGameViewController.m */,
 				9462EBF9190245E20003B966 /* SetCardGameViewController.h */,
@@ -366,6 +371,7 @@
 				94A67504191862BA0085DFEB /* SetCardView.m in Sources */,
 				94A857DF18EF778D00C0E175 /* PlayingCardDeck.m in Sources */,
 				94CD9CE818EEA8E100714E55 /* main.m in Sources */,
+				943F5E5E19199588006575F3 /* TabBarViewController.m in Sources */,
 				94A67501191860B90085DFEB /* PlayingCardView.m in Sources */,
 				94CD9D1218EEA9BA00714E55 /* Card.m in Sources */,
 				94ED1D0218F7601D000E17A2 /* PlayingCardGameViewController.m in Sources */,

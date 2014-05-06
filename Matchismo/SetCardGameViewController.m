@@ -39,6 +39,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.matchNumber = 3;
     self.removeCardWhenMatched = YES;
     self.cardNumber = 12;
     self.cardSize = CGSizeMake(100.0, 100.0);
