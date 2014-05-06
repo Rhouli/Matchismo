@@ -88,8 +88,12 @@
         } else {
                 currentCardView = self.activeCards[indexOfView];
                 if (card.matched){
-                    [currentCardView removeFromSuperview];
-                    [self.activeCards removeObject:currentCardView];
+                    if (self.removeCardWhenMatched){
+                        [currentCardView removeFromSuperview];
+                        [self.activeCards removeObject:currentCardView];
+                    } else {
+                        currentCardView.alpha = 0.6;
+                    }
                 } else {
                     [self updateView:currentCardView card:card];
                 }
@@ -120,20 +124,22 @@
 - (void)touchCard:(UITapGestureRecognizer *)tap {
     
     if (tap.state == UIGestureRecognizerStateEnded) {
-        //[self.game chooseCardAtIndex:tap.view.tag];
         Card *card = [self.game cardAtIndex:tap.view.tag];
-        [UIView transitionWithView:tap.view
-                          duration:0.4
-                           options:UIViewAnimationOptionTransitionFlipFromRight
-                        animations:^{
-                            card.chosen = !card.chosen;
-                            [self updateView:tap.view card:card];
-                          }
-                        completion:^(BOOL finished){
-                            card.chosen = !card.chosen;
-                            [self.game chooseCardAtIndex:tap.view.tag];
-                            [self updateUI];
-                        }];
+        if (!card.matched) {
+            [self.game chooseCardAtIndex:tap.view.tag];
+            
+            [UIView transitionWithView:tap.view
+                              duration:0.4
+                               options:UIViewAnimationOptionTransitionFlipFromRight
+                            animations:^{
+                                [self updateView:tap.view card:card];
+                            }
+                            completion:^(BOOL finished){
+                                card.chosen = !card.chosen;
+                                [self.game chooseCardAtIndex:tap.view.tag];
+                                [self updateUI];
+                            }];
+        }
     }
 }
 - (IBAction)dealThreeNewCards:(UIButton *)sender {
