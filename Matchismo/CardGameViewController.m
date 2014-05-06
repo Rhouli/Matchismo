@@ -89,8 +89,15 @@
                 currentCardView = self.activeCards[indexOfView];
                 if (card.matched){
                     if (self.removeCardWhenMatched){
-                        [currentCardView removeFromSuperview];
                         [self.activeCards removeObject:currentCardView];
+                        [UIView animateWithDuration:1.3
+                                              delay:0.3
+                                            options:UIViewAnimationOptionTransitionCrossDissolve
+                                         animations:^{
+                                             currentCardView.alpha = 0.0;
+                                         } completion:^(BOOL finished){
+                                             [currentCardView removeFromSuperview];
+                                         }];
                     } else {
                         currentCardView.alpha = 0.6;
                     }
@@ -100,11 +107,20 @@
             }
         }
     self.cardGrid.minimumNumberOfCells = [self.activeCards count];
+    
     for(NSUInteger i = 0; i < [self.activeCards count]; i++){
-        CGRect currentFrame = [self.cardGrid frameOfCellAtRow:i / self.cardGrid.columnCount
-                                                     inColumn:i % self.cardGrid.columnCount];
+        NSUInteger row = i / self.cardGrid.columnCount;
+        NSUInteger column = i % self.cardGrid.columnCount;
+        CGRect currentFrame = [self.cardGrid frameOfCellAtRow:row
+                                                    inColumn:column];
         currentFrame = CGRectInset(currentFrame, currentFrame.size.width*SPACING, currentFrame.size.height*SPACING);
-        ((UIView *)self.activeCards[i]).frame = currentFrame;
+        [UIView animateWithDuration:1.3
+                              delay:0.3
+                            options:UIViewAnimationOptionTransitionCurlUp
+                         animations:^{
+                             UIView *tmp = (UIView *)self.activeCards[i];
+                             tmp.frame = currentFrame; }
+                         completion:NULL];
     }
     
     // update score
