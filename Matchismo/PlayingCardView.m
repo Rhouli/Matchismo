@@ -50,7 +50,7 @@
 
         [self drawCorners];
     } else {
-        UIImage *cardbackImage = [UIImage imageNamed:@"cardback"];
+        UIImage *cardbackImage = [UIImage imageNamed:@"PlayingCardBack"];
         [cardbackImage drawInRect:self.bounds];
     }
 }

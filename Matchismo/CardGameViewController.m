@@ -19,6 +19,7 @@
 @property (strong, nonatomic) NSMutableArray *activeCards;
 @property (weak, nonatomic) IBOutlet UIButton *threeNewCardsButton;
 @property (strong, nonatomic) Grid *cardGrid;
+@property (strong, nonatomic) IBOutlet UIDynamicAnimator *stackCards;
 @end
 
 @implementation CardGameViewController
@@ -60,6 +61,7 @@
     for (UIView *card in self.activeCards) [card removeFromSuperview];
     self.activeCards = nil;
     self.threeNewCardsButton.enabled = YES;
+    self.stackCards = nil;
     [self updateUI];
 }
 
@@ -141,7 +143,7 @@
     
     if (tap.state == UIGestureRecognizerStateEnded) {
         Card *card = [self.game cardAtIndex:tap.view.tag];
-        if (!card.matched) {
+        if (!card.matched && !self.stackCards) {
             [self.game chooseCardAtIndex:tap.view.tag];
             
             [UIView transitionWithView:tap.view
@@ -157,15 +159,70 @@
                             }];
         }
     }
+    self.stackCards = nil;
+    [self updateUI];
 }
 - (IBAction)dealThreeNewCards:(UIButton *)sender {
     for (int i = 0; i < 3; i++)
         [self.game drawCard];
     if ([self.game emptyDeck])
         sender.enabled = NO;
+    self.stackCards = nil;
     [self updateUI];
 }
 
+#define RESISTANCE_TO_PILING 40.0
+
+- (IBAction)gatherCardsIntoPile:(UIPinchGestureRecognizer *)gesture {
+    if ((gesture.state == UIGestureRecognizerStateChanged) ||
+        (gesture.state == UIGestureRecognizerStateEnded)) {
+        if (!self.stackCards) {
+            CGPoint center = [gesture locationInView:self.cardGridView];
+            self.stackCards= [[UIDynamicAnimator alloc] initWithReferenceView:self.cardGridView];
+            UIDynamicItemBehavior *item = [[UIDynamicItemBehavior alloc] initWithItems:self.activeCards];
+            item.resistance = RESISTANCE_TO_PILING;
+            [self.stackCards addBehavior:item];
+            for (UIView *cardView in self.activeCards) {
+                UISnapBehavior *snap = [[UISnapBehavior alloc] initWithItem:cardView snapToPoint:center];
+                [self.stackCards addBehavior:snap];
+            }
+        }
+    }
+}
+
+- (IBAction)panPile:(UIPanGestureRecognizer *)gesture {
+    if (self.stackCards) {
+        CGPoint gesturePoint = [gesture locationInView:self.cardGridView];
+        if (gesture.state == UIGestureRecognizerStateBegan) {
+            for (UIView *cardView in self.activeCards) {
+                UIAttachmentBehavior *attachment = [[UIAttachmentBehavior alloc] initWithItem:cardView
+                                                                             attachedToAnchor:gesturePoint];
+                [self.stackCards addBehavior:attachment];
+            }
+            for (UIDynamicBehavior *behaviour in self.stackCards.behaviors) {
+                if ([behaviour isKindOfClass:[UISnapBehavior class]]) {
+                    [self.stackCards removeBehavior:behaviour];
+                }
+            }
+        } else if (gesture.state == UIGestureRecognizerStateChanged) {
+            for (UIDynamicBehavior *behaviour in self.stackCards.behaviors) {
+                if ([behaviour isKindOfClass:[UIAttachmentBehavior class]]) {
+                    ((UIAttachmentBehavior *)behaviour).anchorPoint = gesturePoint;
+                }
+            }
+        } else if (gesture.state == UIGestureRecognizerStateEnded) {
+            for (UIDynamicBehavior *behaviour in self.stackCards.behaviors) {
+                if ([behaviour isKindOfClass:[UIAttachmentBehavior class]]) {
+                    [self.stackCards removeBehavior:behaviour];
+                }
+            }
+            for (UIView *cardView in self.activeCards) {
+                UISnapBehavior *snap = [[UISnapBehavior alloc] initWithItem:cardView snapToPoint:gesturePoint];
+                [self.stackCards addBehavior:snap];
+            }
+        }
+    }
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];

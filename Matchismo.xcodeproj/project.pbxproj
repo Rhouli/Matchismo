@@ -124,8 +124,6 @@
 				94A857DB18EF74D200C0E175 /* PlayingCard.m */,
 				94A857DD18EF778D00C0E175 /* PlayingCardDeck.h */,
 				94A857DE18EF778D00C0E175 /* PlayingCardDeck.m */,
-				94A67500191860B90085DFEB /* PlayingCardView.m */,
-				94A674FF191860B90085DFEB /* PlayingCardView.h */,
 			);
 			name = PlayingCardGame;
 			sourceTree = "<group>";
@@ -137,8 +135,6 @@
 				9462EBF419022B400003B966 /* SetCard.m */,
 				9462EBF619022B580003B966 /* SetCardDeck.h */,
 				9462EBF719022B580003B966 /* SetCardDeck.m */,
-				94A67502191862BA0085DFEB /* SetCardView.h */,
-				94A67503191862BA0085DFEB /* SetCardView.m */,
 			);
 			name = SetCardGame;
 			sourceTree = "<group>";
@@ -178,6 +174,10 @@
 			children = (
 				94A67505191881D60085DFEB /* Grid.h */,
 				94A67506191881D60085DFEB /* Grid.m */,
+				94A67500191860B90085DFEB /* PlayingCardView.m */,
+				94A674FF191860B90085DFEB /* PlayingCardView.h */,
+				94A67502191862BA0085DFEB /* SetCardView.h */,
+				94A67503191862BA0085DFEB /* SetCardView.m */,
 				94CD9D1718EF9AF200714E55 /* Viewer */,
 				94CD9D1618EF9A9500714E55 /* Model */,
 				94CD9D1818EF9AFB00714E55 /* Controller */,

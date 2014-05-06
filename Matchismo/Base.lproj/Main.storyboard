@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="12F45" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="mMJ-1t-H0C">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="12F45" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="mMJ-1t-H0C">
     <dependencies>
         <deployment defaultVersion="1536" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
@@ -9,19 +9,27 @@
         <scene sceneID="ufC-wZ-h7g">
             <objects>
                 <viewController id="vXZ-lx-hvc" customClass="PlayingCardGameViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="KRx-jt-7QS"/>
+                        <viewControllerLayoutGuide type="bottom" id="oWn-P5-XDJ"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score: 0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="LoA-vm-r4f">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score: 0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LoA-vm-r4f">
                                 <rect key="frame" x="20" y="403" width="91" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="YyS-3Z-r2A"/>
+                                    <constraint firstAttribute="width" constant="91" id="azC-Ny-dgn"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="rTt-Tr-co3">
-                                <rect key="frame" x="114" y="393" width="93" height="34"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rTt-Tr-co3">
+                                <rect key="frame" x="114" y="390" width="93" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="26"/>
                                 <state key="normal" title="Deal" backgroundImage="PlayingCardFront">
@@ -31,13 +39,30 @@
                                     <action selector="ResetGame:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="7KJ-73-gbU"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" id="K8g-rV-YOQ">
-                                <rect key="frame" x="9" y="20" width="303" height="359"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K8g-rV-YOQ">
+                                <rect key="frame" x="9" y="20" width="303" height="352"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.0" green="0.50196081399917603" blue="0.25098040699958801" alpha="1" colorSpace="calibratedRGB"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="6FU-fu-muK" appends="YES" id="Eac-EU-irO"/>
+                                    <outletCollection property="gestureRecognizers" destination="bhR-UF-BaC" appends="YES" id="aJi-Ut-FIl"/>
+                                </connections>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.50196081399917603" blue="0.25098040699958801" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="rTt-Tr-co3" firstAttribute="top" secondItem="K8g-rV-YOQ" secondAttribute="bottom" constant="18" id="DNK-Ka-9lY"/>
+                            <constraint firstItem="rTt-Tr-co3" firstAttribute="leading" secondItem="LoA-vm-r4f" secondAttribute="trailing" constant="3" id="DPy-6v-ovf"/>
+                            <constraint firstAttribute="trailing" secondItem="K8g-rV-YOQ" secondAttribute="trailing" constant="8" id="Tnl-q5-iHm"/>
+                            <constraint firstItem="K8g-rV-YOQ" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" constant="20" symbolic="YES" id="XFy-rc-mAA"/>
+                            <constraint firstItem="rTt-Tr-co3" firstAttribute="bottom" secondItem="LoA-vm-r4f" secondAttribute="bottom" id="Zuu-XO-UJo"/>
+                            <constraint firstAttribute="bottom" secondItem="K8g-rV-YOQ" secondAttribute="bottom" constant="108" id="ae3-7z-LWI"/>
+                            <constraint firstItem="rTt-Tr-co3" firstAttribute="centerX" secondItem="K8g-rV-YOQ" secondAttribute="centerX" id="cA7-O9-eF8"/>
+                            <constraint firstItem="oWn-P5-XDJ" firstAttribute="top" secondItem="LoA-vm-r4f" secondAttribute="bottom" constant="7" id="cab-Rq-St2"/>
+                            <constraint firstItem="LoA-vm-r4f" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="20" symbolic="YES" id="eOx-su-RWz"/>
+                            <constraint firstItem="K8g-rV-YOQ" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="9" id="mc2-Cp-xTD"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Playing Card Game" id="TaJ-eR-y3g"/>
                     <navigationItem key="navigationItem" title="Playing Card" id="fO4-fl-6fg">
@@ -49,6 +74,16 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
+                <pinchGestureRecognizer id="6FU-fu-muK">
+                    <connections>
+                        <action selector="gatherCardsIntoPile:" destination="vXZ-lx-hvc" id="eQu-0d-vke"/>
+                    </connections>
+                </pinchGestureRecognizer>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="bhR-UF-BaC">
+                    <connections>
+                        <action selector="panPile:" destination="vXZ-lx-hvc" id="BUb-35-am1"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="282" y="-209"/>
         </scene>
@@ -56,19 +91,26 @@
         <scene sceneID="1xk-vN-NyA">
             <objects>
                 <viewController id="Add-eZ-Vmd" customClass="SetCardGameViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="biG-1e-ktS"/>
+                        <viewControllerLayoutGuide type="bottom" id="XsK-xl-B3R"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="nJs-z5-JA5">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score: 0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="M8s-s1-n2g">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score: 0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M8s-s1-n2g">
                                 <rect key="frame" x="20" y="403" width="91" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="oGY-OP-bo3"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="6bK-x8-HiM">
-                                <rect key="frame" x="114" y="393" width="93" height="34"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6bK-x8-HiM">
+                                <rect key="frame" x="114" y="390" width="93" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="26"/>
                                 <state key="normal" title="Deal" backgroundImage="PlayingCardFront">
@@ -78,12 +120,17 @@
                                     <action selector="ResetGame:" destination="Add-eZ-Vmd" eventType="touchUpInside" id="lrX-PB-J7z"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" id="Faz-ja-BY4">
-                                <rect key="frame" x="6" y="20" width="309" height="365"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Faz-ja-BY4">
+                                <rect key="frame" x="6" y="20" width="309" height="347"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="0.25098040700000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="S0j-Uy-vc5" appends="YES" id="9AA-TI-1y2"/>
+                                    <outletCollection property="gestureRecognizers" destination="ZeM-UU-ac0" appends="YES" id="GXX-vJ-vkx"/>
+                                </connections>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="WJt-wm-OM6">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WJt-wm-OM6">
                                 <rect key="frame" x="240" y="393" width="60" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Deal 3" backgroundImage="PlayingCardFront">
@@ -95,6 +142,28 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="0.25098040700000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="Faz-ja-BY4" secondAttribute="trailing" constant="5" id="1dO-Ys-LOF"/>
+                            <constraint firstItem="Faz-ja-BY4" firstAttribute="top" secondItem="nJs-z5-JA5" secondAttribute="top" constant="20" symbolic="YES" id="7Hc-8N-Mdk"/>
+                            <constraint firstItem="M8s-s1-n2g" firstAttribute="leading" secondItem="nJs-z5-JA5" secondAttribute="leading" constant="20" symbolic="YES" id="BQG-EP-FHs"/>
+                            <constraint firstItem="6bK-x8-HiM" firstAttribute="top" secondItem="Faz-ja-BY4" secondAttribute="bottom" constant="23" id="CzO-GT-ltX"/>
+                            <constraint firstItem="Faz-ja-BY4" firstAttribute="leading" secondItem="nJs-z5-JA5" secondAttribute="leading" constant="6" id="Qvb-rx-QjW"/>
+                            <constraint firstAttribute="trailing" secondItem="WJt-wm-OM6" secondAttribute="trailing" constant="20" symbolic="YES" id="Qw5-kc-7MN"/>
+                            <constraint firstItem="6bK-x8-HiM" firstAttribute="bottom" secondItem="WJt-wm-OM6" secondAttribute="bottom" id="ThJ-Vo-6LQ"/>
+                            <constraint firstItem="WJt-wm-OM6" firstAttribute="top" secondItem="Faz-ja-BY4" secondAttribute="bottom" constant="26" id="aNe-SR-de6"/>
+                            <constraint firstItem="M8s-s1-n2g" firstAttribute="top" secondItem="Faz-ja-BY4" secondAttribute="bottom" constant="36" id="bbY-Si-KT4"/>
+                            <constraint firstItem="6bK-x8-HiM" firstAttribute="leading" secondItem="nJs-z5-JA5" secondAttribute="leading" constant="114" id="fLd-zn-RWD"/>
+                            <constraint firstItem="6bK-x8-HiM" firstAttribute="leading" secondItem="M8s-s1-n2g" secondAttribute="trailing" constant="3" id="g6B-Al-077"/>
+                            <constraint firstItem="6bK-x8-HiM" firstAttribute="centerX" secondItem="nJs-z5-JA5" secondAttribute="centerX" id="h5x-0w-Vg3"/>
+                            <constraint firstItem="XsK-xl-B3R" firstAttribute="top" secondItem="M8s-s1-n2g" secondAttribute="bottom" constant="7" id="mZr-df-r4S"/>
+                            <constraint firstItem="M8s-s1-n2g" firstAttribute="bottom" secondItem="6bK-x8-HiM" secondAttribute="bottom" id="wYY-bD-anw"/>
+                            <constraint firstItem="WJt-wm-OM6" firstAttribute="leading" secondItem="nJs-z5-JA5" secondAttribute="leading" constant="240" id="yuY-c8-8c3"/>
+                        </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="ZeM-UU-ac0" appends="YES" id="uYq-nl-6m8"/>
+                            <outletCollection property="gestureRecognizers" destination="ZeM-UU-ac0" appends="YES" id="ylZ-9A-FCF"/>
+                        </connections>
                     </view>
                     <tabBarItem key="tabBarItem" title="Set Card Game" id="jCp-fb-HyV"/>
                     <navigationItem key="navigationItem" title="Set Card" id="Qa3-RN-eGL">
@@ -107,6 +176,16 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LOr-pk-waT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <pinchGestureRecognizer id="S0j-Uy-vc5">
+                    <connections>
+                        <action selector="gatherCardsIntoPile:" destination="Add-eZ-Vmd" id="r5k-x4-O5B"/>
+                    </connections>
+                </pinchGestureRecognizer>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="ZeM-UU-ac0">
+                    <connections>
+                        <action selector="panPile:" destination="Add-eZ-Vmd" id="bnE-cO-ogT"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="282" y="391"/>
         </scene>
