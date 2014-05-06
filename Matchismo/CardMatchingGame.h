@@ -19,8 +19,11 @@
 - (void)chooseCardAtIndex:(NSUInteger)index;
 - (Card *)cardAtIndex:(NSUInteger)index;
 - (void)setMatchNum:(NSInteger)matchNum;
+- (Card *)drawCard;
 
 @property (nonatomic, readonly) NSInteger score;
 @property (nonatomic, readonly) NSInteger recentScore;
 @property (nonatomic, readonly) NSArray *previousChosenCards;
+@property (nonatomic, readonly) NSUInteger dealtCardNum;
+@property (nonatomic, readonly) BOOL emptyDeck;
 @end

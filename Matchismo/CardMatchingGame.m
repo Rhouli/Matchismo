@@ -14,6 +14,8 @@
 @property (nonatomic, strong) NSMutableArray *cards;
 @property (nonatomic, readwrite) NSInteger matchNum;
 @property (nonatomic, strong) NSArray *previousChosenCards;
+@property (nonatomic, strong) Deck *deck;
+@property (nonatomic, readwrite) BOOL emptyDeck;
 @end
 
 @implementation CardMatchingGame
@@ -33,10 +35,11 @@ static const int DEFAULT_MATCH_NUM = 2;
 }
 
 -(instancetype)initWithCardCount:(NSUInteger)count usingDeck:(Deck *)deck {
+    _deck = deck;
     self = [super init]; // super's designated initializer
     if (self) {
         for (int i = 0; i < count; i++) {
-            Card *card = [deck drawRandomCard];
+            Card *card = [_deck drawRandomCard];
             if (card) {
                 [self.cards addObject:card];
             } else {
@@ -52,6 +55,7 @@ static const int DEFAULT_MATCH_NUM = 2;
 // Starts a new game by re-dealing the cards and
 // setting the score back to 0
 - (void)newGame:(Deck *)deck {
+    _deck = deck;
     int count = [self.cards count];
     NSMutableArray *discardItems = [NSMutableArray array];
     
@@ -62,7 +66,7 @@ static const int DEFAULT_MATCH_NUM = 2;
     
     // add new cards to the cards array
     for (int i = 0; i < count; i++) {
-        Card *card = [deck drawRandomCard];
+        Card *card = [_deck drawRandomCard];
         if (card) {
             [self.cards addObject:card];
         } else {
@@ -72,6 +76,7 @@ static const int DEFAULT_MATCH_NUM = 2;
     
     // set score back to 0
     self.score = 0;
+    self.emptyDeck = NO;
 }
 
 - (void)newGame:(Deck *)deck usingMatchNum:(NSInteger)matchNum {
@@ -81,6 +86,19 @@ static const int DEFAULT_MATCH_NUM = 2;
 
 - (Card *)cardAtIndex:(NSUInteger)index {
     return (index<[self.cards count]) ? self.cards[index] : nil;
+}
+
+- (NSUInteger)dealtCardNum {
+    return [self.cards count];
+}
+
+- (Card *)drawCard {
+    Card* card = [self.deck drawRandomCard];
+    if (card){
+        [self.cards addObject:card];
+    } else
+        self.emptyDeck = YES;
+    return card;
 }
 
 - (void)chooseCardAtIndex:(NSUInteger)index {

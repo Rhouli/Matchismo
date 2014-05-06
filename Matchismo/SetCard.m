@@ -76,12 +76,12 @@
 
 - (NSString *)number
 {
-    return _number ? _number: @"?";
+    return _number ? _number : @"0";
 }
 
 + (NSArray *)validSymbols
 {
-    return @[@"■",@"●",@"▲"];
+    return @[@"diamond", @"squiggle", @"oval"];
 }
 
 + (NSArray *)validColors

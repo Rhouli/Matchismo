@@ -11,12 +11,10 @@
 #import "HistoryViewController.h"
 
 @interface CardGameViewController : UIViewController
-
-@property (strong, nonatomic) NSMutableArray *gameHistory;
-
+@property (nonatomic) NSUInteger cardNumber;
+@property (nonatomic) CGSize cardSize;
+@property (nonatomic) BOOL removeCardWhenMatched;
 // abstract
 - (Deck *)createDeck;
-- (NSAttributedString *)titleForCard:(Card *)card showContents:(BOOL)optional;
 - (void)updateUI;
-- (UIImage *)backgroundImageForCard:(Card *)card;
 @end

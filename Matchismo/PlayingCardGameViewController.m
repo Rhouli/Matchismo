@@ -8,11 +8,8 @@
 
 #import "PlayingCardGameViewController.h"
 #import "PlayingCardDeck.h"
-
-#define FONT_SIZE 14
-#define FONT_HELVETICA @"Helvetica-Light"
-#define BLACK [UIColor colorWithRed:40.0f/255.0f green:40.0f/255.0f blue:40.0f/255.0f alpha:1]
-#define RED [UIColor colorWithRed:1 green:0 blue:0 alpha:1]
+#import "PlayingCardView.h"
+#import "PlayingCard.h"
 
 @interface PlayingCardGameViewController ()
 
@@ -24,34 +21,26 @@
     return [[PlayingCardDeck alloc] init];
 }
 
-- (NSAttributedString *)titleForCard:(Card *)card showContents:(BOOL)optional{
-    NSString* string;
-    if (optional)
-        string = card.contents;
-    else
-        string = card.isChosen ? card.contents: @" ";
+- (UIView *)makeCardView:(Card *)card {
+    PlayingCardView *newView = [[PlayingCardView alloc] init];
+    [self updateView:newView card:card];
+    return newView;
+}
 
-    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-    paragraphStyle.alignment = NSTextAlignmentCenter;
-    UIFont * labelFont = [UIFont fontWithName:FONT_HELVETICA size:FONT_SIZE];
+- (void)updateView:(UIView *)view card:(Card *)card {
+    PlayingCardView *pCardView = (PlayingCardView *) view;
+    PlayingCard *pCard = (PlayingCard *) card;
     
-    UIColor * labelColor;
-    NSCharacterSet *cset = [NSCharacterSet characterSetWithCharactersInString:@"♥♦"];
-    NSRange range = [string rangeOfCharacterFromSet:cset];
-    if (range.location == NSNotFound)
-        labelColor = BLACK;
-    else
-        labelColor = RED;
-
-    NSAttributedString *labelText = [[NSAttributedString alloc] initWithString:string
-                                  attributes:@{
-                                             NSParagraphStyleAttributeName:paragraphStyle,
-                                             NSFontAttributeName : labelFont,
-                                             NSForegroundColorAttributeName : labelColor }];
-    return labelText;
+    pCardView.rank = pCard.rank;
+    pCardView.suit = pCard.suit;
+    pCardView.faceUp = pCard.chosen;
 }
 
-- (UIImage *)backgroundImageForCard:(Card *)card {
-    return [UIImage imageNamed:card.isChosen ? @"PlayingCardFront" : @"PlayingCardBack"];
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.cardNumber = 30;
+    self.cardSize = CGSizeMake(80.0, 80.0);
+    [self updateUI];
 }
+
 @end
