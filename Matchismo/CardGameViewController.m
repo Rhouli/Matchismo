@@ -128,7 +128,7 @@
     }
     
     // update score
-    self.scoreLabel.text = [NSString stringWithFormat:@"Score: %ld", self.game.score];
+    self.scoreLabel.text = [NSString stringWithFormat:@"Score: %ld", (long)self.game.score];
 }
 
 - (UIView *)makeCardView:(Card *)card {
@@ -223,8 +223,6 @@
     [self updateUI];
 }
 
-
-
 - (BOOL)shouldAutomaticallyForwardRotationMethods { return YES;}
 
 - (void)viewDidLoad {
@@ -246,7 +244,7 @@
     [item1 setFinishedSelectedImage:selected1 withFinishedUnselectedImage:unselected1];
 }
 
-- (void)viewWillAppear {
+- (void)viewDidAppear {
     self.cardGrid.size = self.cardGridView.bounds.size;
     [self updateUI];
 }
